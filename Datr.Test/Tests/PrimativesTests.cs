@@ -1,5 +1,6 @@
 ﻿using Datr.Test.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace Datr.Test.Tests
 {
@@ -95,6 +96,20 @@ namespace Datr.Test.Tests
         {
             var primatives = Setup();
             Assert.IsNotNull(primatives.Bool);
+        }
+
+        [TestMethod]
+        public void IgnorePropetiesByName()
+        {
+            var datr = new Datr
+            {
+                IgnoredPropertyNames = new List<string> { "Int", "Char" }
+            };
+
+            var primitives = datr.Create<Primatives>();
+
+            Assert.AreEqual(0, primitives.Int);
+            Assert.AreEqual(0, (int)primitives.Char);
         }
 
         private Primatives Setup()
