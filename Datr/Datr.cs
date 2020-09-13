@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Datr
@@ -35,7 +36,22 @@ namespace Datr
             {
                 if (!IgnoreProperty<T>(property))
                 {
-                    SetRandomPropertyValue(property, instance);
+                    if (FixedValues.Any(f => f.Type == typeof(T) && f.PropertyName.ToLower() == property.Name.ToLower()))
+                    {
+                        try
+                        {
+                            var fixedValue = FixedValues.Single(f => f.Type == typeof(T) && f.PropertyName.ToLower() == property.Name.ToLower());
+                            property.SetValue(instance, fixedValue.Value);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                    }
+                    else
+                    {
+                        SetRandomPropertyValue(property, instance);
+                    }
                 }
             }
 
