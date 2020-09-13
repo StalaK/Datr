@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Datr
 {
     public class Datr
     {
+        public List<string> IgnoredPropertyNames { get; set; }
+        public List<TypeProperty> IgnoredTypeProperties { get; set; }
         private Randomizer _randomizer { get; set; }
 
         public Datr()
@@ -19,13 +23,20 @@ namespace Datr
 
             foreach (var property in properties)
             {
-                SetPropertyValue(property, instance);
+                if (IgnoredPropertyNames.Any(p => p.ToLower() == property.Name.ToLower()))
+                    continue;
+
+                if (IgnoredTypeProperties.Any(t => t.Type == typeof(T)
+                    && t.PropertyName.ToLower() == property.Name.ToLower()))
+                    continue;
+
+                SetRandomPropertyValue(property, instance);
             }
 
             return (T)instance;
         }
 
-        private void SetPropertyValue<T>(PropertyInfo property, T instance)
+        private void SetRandomPropertyValue<T>(PropertyInfo property, T instance)
         {
             if (property.PropertyType.IsPrimitive)
             {
