@@ -5,6 +5,6 @@
         public int ChildInt { get; set; }
         public string ChildString { get; set; }
         public Strings ChildStrings { get; set; }
-        public Primatives ChildPrimatives { get; set; }
+        public Primitives ChildPrimitives { get; set; }
     }
 }

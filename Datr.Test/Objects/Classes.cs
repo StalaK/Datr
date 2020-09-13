@@ -2,7 +2,8 @@
 {
     public class Classes
     {
-        public Primatives Primatives { get; set; }
-        public Strings Strings { get; set; }
+        public Primitives Primitives { get; set; }
+        public Strings Strings1 { get; set; }
+        public Strings Strings2 { get; set; }
     }
 }

@@ -13,9 +13,10 @@ namespace Datr
 
         public Datr()
         {
-            _randomizer = new Randomizer();
             IgnoredPropertyNames = new List<string>();
             IgnoredTypeProperties = new List<TypeProperty>();
+
+            _randomizer = new Randomizer();
         }
 
         public T Create<T>()
@@ -25,17 +26,28 @@ namespace Datr
 
             foreach (var property in properties)
             {
-                if (IgnoredPropertyNames.Any(p => p.ToLower() == property.Name.ToLower()))
-                    continue;
-
-                if (IgnoredTypeProperties.Any(t => t.Type == typeof(T)
-                    && t.PropertyName.ToLower() == property.Name.ToLower()))
-                    continue;
-
-                SetRandomPropertyValue(property, instance);
+                if (!IgnoreProperty<T>(property))
+                {
+                    SetRandomPropertyValue(property, instance);
+                }
             }
 
             return (T)instance;
+        }
+
+        private bool IgnoreProperty<T>(PropertyInfo property)
+        {
+            if (IgnoredPropertyNames.Any(p => p.ToLower() == property.Name.ToLower()))
+            {
+                return true;
+            }
+
+            if (IgnoredTypeProperties.Any(t => t.Type == typeof(T) && t.PropertyName.ToLower() == property.Name.ToLower()))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private void SetRandomPropertyValue<T>(PropertyInfo property, T instance)

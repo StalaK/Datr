@@ -1,6 +1,6 @@
 ﻿namespace Datr.Test.Objects
 {
-    public class Primatives
+    public class Primitives
     {
         public bool Bool { get; set; }
         public sbyte SByte { get; set; }
