@@ -9,16 +9,23 @@ namespace Datr
     {
         public List<string> ExcludedPropertyNames { get; set; }
         public List<TypeProperty> ExcludedTypeProperties { get; set; }
+        public List<FixedValue> FixedValues { get; set; }
         private Randomizer _randomizer { get; set; }
 
         public Datr()
         {
             ExcludedPropertyNames = new List<string>();
             ExcludedTypeProperties = new List<TypeProperty>();
+            FixedValues = new List<FixedValue>();
 
             _randomizer = new Randomizer();
         }
 
+        /// <summary>
+        /// Create a populated instance of the given type
+        /// </summary>
+        /// <typeparam name="T">The type to be created</typeparam>
+        /// <returns>Populated instance of the given type</returns>
         public T Create<T>()
         {
             var instance = Activator.CreateInstance(typeof(T));
