@@ -99,11 +99,11 @@ namespace Datr.Test.Tests
         }
 
         [TestMethod]
-        public void IgnorePropetiesByName()
+        public void ExcludePropetiesByName()
         {
             var datr = new Datr
             {
-                IgnoredPropertyNames = new List<string> { "Int", "Char" }
+                ExcludedPropertyNames = new List<string> { "Int", "Char" }
             };
 
             var primitives = datr.Create<Primitives>();
@@ -113,11 +113,11 @@ namespace Datr.Test.Tests
         }
 
         [TestMethod]
-        public void IgnorePropetiesByTypeAndName()
+        public void ExcludePropetiesByTypeAndName()
         {
             var datr = new Datr
             {
-                IgnoredTypeProperties = new List<TypeProperty>
+                ExcludedTypeProperties = new List<TypeProperty>
                 {
                     new TypeProperty(typeof(Primitives), "Int"),
                     new TypeProperty(typeof(Primitives), "NotChar"),

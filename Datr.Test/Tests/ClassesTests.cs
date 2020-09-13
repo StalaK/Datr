@@ -137,10 +137,10 @@ namespace Datr.Test.Tests
         }
 
         [TestMethod]
-        public void IgnoredPropertiesByName()
+        public void ExcludedPropertiesByName()
         {
             var datr = new Datr();
-            datr.IgnoredPropertyNames.Add("Primitives");
+            datr.ExcludedPropertyNames.Add("Primitives");
 
             var classes = datr.Create<Classes>();
 
@@ -149,11 +149,11 @@ namespace Datr.Test.Tests
         }
 
         [TestMethod]
-        public void IgnoredPropertiesByTypeAndName()
+        public void ExcludedPropertiesByTypeAndName()
         {
             var datr = new Datr()
             {
-                IgnoredTypeProperties = new List<TypeProperty>
+                ExcludedTypeProperties = new List<TypeProperty>
                 {
                     new TypeProperty(typeof(Classes), "strings1")
                 }
@@ -167,11 +167,11 @@ namespace Datr.Test.Tests
         }
 
         [TestMethod]
-        public void IgnoredClassPropertyPropertiesByTypeAndName()
+        public void ExcludedClassPropertyPropertiesByTypeAndName()
         {
             var datr = new Datr()
             {
-                IgnoredTypeProperties = new List<TypeProperty>
+                ExcludedTypeProperties = new List<TypeProperty>
                 {
                     new TypeProperty(typeof(Strings), "string1")
                 }
@@ -186,11 +186,11 @@ namespace Datr.Test.Tests
         }
 
         [TestMethod]
-        public void InheritedClassPropertiesIgnoredByTypeAndName()
+        public void InheritedClassPropertiesExcludedByTypeAndName()
         {
             var datr = new Datr()
             {
-                IgnoredTypeProperties = new List<TypeProperty>
+                ExcludedTypeProperties = new List<TypeProperty>
                 {
                     new TypeProperty(typeof(ChildClass), "ParentStrings")
                 }

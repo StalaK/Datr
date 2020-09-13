@@ -7,14 +7,14 @@ namespace Datr
 {
     public class Datr
     {
-        public List<string> IgnoredPropertyNames { get; set; }
-        public List<TypeProperty> IgnoredTypeProperties { get; set; }
+        public List<string> ExcludedPropertyNames { get; set; }
+        public List<TypeProperty> ExcludedTypeProperties { get; set; }
         private Randomizer _randomizer { get; set; }
 
         public Datr()
         {
-            IgnoredPropertyNames = new List<string>();
-            IgnoredTypeProperties = new List<TypeProperty>();
+            ExcludedPropertyNames = new List<string>();
+            ExcludedTypeProperties = new List<TypeProperty>();
 
             _randomizer = new Randomizer();
         }
@@ -37,12 +37,12 @@ namespace Datr
 
         private bool IgnoreProperty<T>(PropertyInfo property)
         {
-            if (IgnoredPropertyNames.Any(p => p.ToLower() == property.Name.ToLower()))
+            if (ExcludedPropertyNames.Any(p => p.ToLower() == property.Name.ToLower()))
             {
                 return true;
             }
 
-            if (IgnoredTypeProperties.Any(t => t.Type == typeof(T) && t.PropertyName.ToLower() == property.Name.ToLower()))
+            if (ExcludedTypeProperties.Any(t => t.Type == typeof(T) && t.PropertyName.ToLower() == property.Name.ToLower()))
             {
                 return true;
             }
