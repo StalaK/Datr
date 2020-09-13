@@ -14,6 +14,8 @@ namespace Datr
         public Datr()
         {
             _randomizer = new Randomizer();
+            IgnoredPropertyNames = new List<string>();
+            IgnoredTypeProperties = new List<TypeProperty>();
         }
 
         public T Create<T>()
