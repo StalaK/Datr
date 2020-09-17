@@ -92,7 +92,7 @@ namespace Datr
                 throw new ArgumentException("SetIntRange: maxValue cannot be equal to int.MinValue");
             }
 
-            if (!HasProperty<T>(propertyName))
+            if (!HasProperty<T, int>(propertyName))
             {
                 throw new ArgumentException($"SetIntRange: The type {typeof(T).Name} does not contain the property {propertyName}");
             }
@@ -108,7 +108,57 @@ namespace Datr
             };
 
             FixedRanges.Add(intRange);
-        } 
+        }
+
+        public void SetUIntRange<T>(string propertyName, Range range, uint? minValue = null, uint? maxValue = null)
+        {
+            if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetUIntRange: minValue and maxValue parameters must be set when using a range of Between or Outside.");
+            }
+
+            if (maxValue <= minValue && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetUIntRange: maxValue cannot be less than or equal to minValue when using a range of Between or Outside");
+            }
+
+            if (minValue == null && range == Range.GreaterThan)
+            {
+                throw new ArgumentException("SetUIntRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (maxValue == null && range == Range.LessThan)
+            {
+                throw new ArgumentException("SetUIntRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (minValue == uint.MaxValue)
+            {
+                throw new ArgumentException("SetUIntRange: minValue cannot be equal to uint.MaxValue");
+            }
+
+            if (maxValue == uint.MinValue)
+            {
+                throw new ArgumentException("SetUIntRange: maxValue cannot be equal to uint.MinValue");
+            }
+
+            if (!HasProperty<T, uint>(propertyName))
+            {
+                throw new ArgumentException($"SetUIntRange: The type {typeof(T).Name} does not contain the property {propertyName}");
+            }
+
+            var intRange = new FixedRange
+            {
+                DataType = typeof(int),
+                ClassType = typeof(T),
+                PropertyName = propertyName,
+                Range = range,
+                MinValue = minValue,
+                MaxValue = maxValue
+            };
+
+            FixedRanges.Add(intRange);
+        }
 
         private bool IgnoreProperty<T>(PropertyInfo property)
         {
@@ -210,16 +260,7 @@ namespace Datr
         public FixedRange GetFixedRange<T>(PropertyInfo property) => 
             FixedRanges.FirstOrDefault(r => (Type)r.ClassType == typeof(T) && r.PropertyName.ToLower() == property.Name.ToLower());
 
-        private bool HasProperty<T>(string propertyName)
-        {
-            var properties = typeof(T).GetProperties();
-            foreach (var property in properties)
-            {
-                if (property.Name.ToLower() == propertyName.ToLower())
-                    return true;
-            }
-
-            return false;
-        }
+        private bool HasProperty<T, U>(string propertyName) =>
+            typeof(T).GetProperties().Any(p => p.Name.ToLower() == propertyName.ToLower() && p.PropertyType == typeof(U));
     }
 }
