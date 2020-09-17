@@ -12,6 +12,7 @@ namespace Datr
             _random = new Random();
         }
 
+        #region Fully Random
         internal bool Bool() => _random.Next(2) == 1;
         internal int Int() => _random.Next(int.MinValue, int.MaxValue);
         internal sbyte SByte() => (sbyte)_random.Next(sbyte.MinValue, sbyte.MaxValue + 1);
@@ -69,5 +70,29 @@ namespace Datr
             int lastBits = _random.Next(0, 1 << 28);
             return firstBits | lastBits;
         }
+
+        #endregion
+
+        #region FixedRanges
+        internal int FixedRangeInt(FixedRange range)
+        {
+            switch (range.Range)
+            {
+                case Range.GreaterThan:
+                    return _random.Next((int)range.MinValue, int.MaxValue);
+                case Range.LessThan:
+                    return _random.Next(int.MinValue, (int)range.MaxValue);
+                case Range.Between:
+                    return _random.Next((int)range.MinValue, (int)range.MaxValue);
+                case Range.Outside:
+                    var min = _random.Next(int.MinValue, (int)range.MinValue);
+                    var max = _random.Next((int)range.MaxValue, int.MaxValue);
+                    return Bool() ? min : max;
+                default:
+                    throw new Exception("Error generating random integer within range");
+            }
+        }
+
+        #endregion
     }
 }

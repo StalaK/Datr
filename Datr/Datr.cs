@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Datr
@@ -11,6 +11,7 @@ namespace Datr
         public List<string> ExcludedPropertyNames { get; set; }
         public List<TypeProperty> ExcludedTypeProperties { get; set; }
         public List<FixedValue> FixedValues { get; set; }
+        public List<FixedRange> FixedRanges { get; set; }
         private Randomizer _randomizer { get; set; }
 
         public Datr()
@@ -18,6 +19,7 @@ namespace Datr
             ExcludedPropertyNames = new List<string>();
             ExcludedTypeProperties = new List<TypeProperty>();
             FixedValues = new List<FixedValue>();
+            FixedRanges = new List<FixedRange>();
 
             _randomizer = new Randomizer();
         }
@@ -57,6 +59,51 @@ namespace Datr
 
             return (T)instance;
         }
+
+        public void SetIntRange<T>(string propertyName, Range range, int? minValue = null, int? maxValue = null)
+        {
+            if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetIntRange: minValue and maxValue parameters must be set when using a range of Between or Outside.");
+            }
+
+            if (minValue == null && range == Range.GreaterThan)
+            {
+                throw new ArgumentException("SetIntRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (maxValue == null && range == Range.LessThan)
+            {
+                throw new ArgumentException("SetIntRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (maxValue != null && maxValue <= minValue)
+            {
+                throw new ArgumentException("SetIntRange: maxValue cannot be less than or equal to minValue");
+            }
+
+            if (minValue == int.MaxValue)
+            {
+                throw new ArgumentException("SetIntRange: minValue cannot be equal to int.MaxValue");
+            }
+
+            if (!HasProperty<T>(propertyName))
+            {
+                throw new ArgumentException($"SetIntRange: The type {typeof(T).Name} does not contain the property {propertyName}");
+            }
+
+            var intRange = new FixedRange
+            {
+                DataType = typeof(int),
+                ClassType = typeof(T),
+                PropertyName = propertyName,
+                Range = range,
+                MinValue = minValue,
+                MaxValue = maxValue
+            };
+
+            FixedRanges.Add(intRange);
+        } 
 
         private bool IgnoreProperty<T>(PropertyInfo property)
         {
@@ -125,7 +172,11 @@ namespace Datr
                         break;
 
                     case int t:
-                        property.SetValue(instance, _randomizer.Int());
+                        var method = this.GetType().GetMethod("GetFixedRange");
+                        var genericMethod = method.MakeGenericMethod(instance.GetType());
+                        var range = (FixedRange)genericMethod.Invoke(this, new[] { property });
+                        var value = range == null ? _randomizer.Int() : _randomizer.FixedRangeInt(range);
+                        property.SetValue(instance, value);
                         break;
                 }
             }
@@ -149,6 +200,21 @@ namespace Datr
                     property.SetValue(instance, populatedClass);
                 }
             }
+        }
+
+        public FixedRange GetFixedRange<T>(PropertyInfo property) => 
+            FixedRanges.FirstOrDefault(r => (Type)r.ClassType == typeof(T) && r.PropertyName.ToLower() == property.Name.ToLower());
+
+        private bool HasProperty<T>(string propertyName)
+        {
+            var properties = typeof(T).GetProperties();
+            foreach (var property in properties)
+            {
+                if (property.Name.ToLower() == propertyName.ToLower())
+                    return true;
+            }
+
+            return false;
         }
     }
 }
