@@ -67,6 +67,11 @@ namespace Datr
                 throw new ArgumentException("SetIntRange: minValue and maxValue parameters must be set when using a range of Between or Outside.");
             }
 
+            if (maxValue <= minValue && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetIntRange: maxValue cannot be less than or equal to minValue when using a range of Between or Outside");
+            }
+
             if (minValue == null && range == Range.GreaterThan)
             {
                 throw new ArgumentException("SetIntRange: minValue must not be null when using the GreaterThan range");
@@ -77,14 +82,14 @@ namespace Datr
                 throw new ArgumentException("SetIntRange: minValue must not be null when using the GreaterThan range");
             }
 
-            if (maxValue != null && maxValue <= minValue)
-            {
-                throw new ArgumentException("SetIntRange: maxValue cannot be less than or equal to minValue");
-            }
-
             if (minValue == int.MaxValue)
             {
                 throw new ArgumentException("SetIntRange: minValue cannot be equal to int.MaxValue");
+            }
+
+            if (maxValue == int.MinValue)
+            {
+                throw new ArgumentException("SetIntRange: maxValue cannot be equal to int.MinValue");
             }
 
             if (!HasProperty<T>(propertyName))
