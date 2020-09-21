@@ -180,58 +180,68 @@ namespace Datr
             if (property.PropertyType.IsPrimitive)
             {
                 var propertyInstance = Activator.CreateInstance(property.PropertyType);
-                switch(propertyInstance)
+                var method = this.GetType().GetMethod("GetFixedRange");
+                var genericMethod = method.MakeGenericMethod(instance.GetType());
+                var range = (FixedRange)genericMethod.Invoke(this, new[] { property });
+
+                switch (propertyInstance)
                 {
                     case bool t:
                         property.SetValue(instance, _randomizer.Bool());
-                        break;
-
-                    case sbyte t:
-                        property.SetValue(instance, _randomizer.SByte());
-                        break;
-
-                    case byte t:
-                        property.SetValue(instance, _randomizer.Byte());
-                        break;
-
-                    case short t:
-                        property.SetValue(instance, _randomizer.Short());
-                        break;
-
-                    case ushort t:
-                        property.SetValue(instance, _randomizer.UShort());
                         break;
 
                     case char t:
                         property.SetValue(instance, _randomizer.Char());
                         break;
 
+                    case sbyte t:
+                        var sbyteValue = range == null ? _randomizer.SByte() : _randomizer.FixedRangeSByte(range);
+                        property.SetValue(instance, sbyteValue);
+                        break;
+
+                    case byte t:
+                        var byteValue = range == null ? _randomizer.Byte() : _randomizer.FixedRangeByte(range);
+                        property.SetValue(instance, byteValue);
+                        break;
+
+                    case short t:
+                        var shortValue = range == null ? _randomizer.Short() : _randomizer.FixedRangeShort(range);
+                        property.SetValue(instance, shortValue);
+                        break;
+
+                    case ushort t:
+                        var ushortValue = range == null ? _randomizer.UShort() : _randomizer.FixedRangeUShort(range);
+                        property.SetValue(instance, ushortValue);
+                        break;
+
                     case double t:
-                        property.SetValue(instance, _randomizer.Double());
+                        var doubleValue = range == null ? _randomizer.Double() : _randomizer.FixedRangeDouble(range);
+                        property.SetValue(instance, doubleValue);
                         break;
 
                     case float t:
-                        property.SetValue(instance, _randomizer.Float());
-                        break;
-
-                    case uint t:
-                        property.SetValue(instance, _randomizer.UInt());
-                        break;
-
-                    case long t:
-                        property.SetValue(instance, _randomizer.Long());
-                        break;
-
-                    case ulong t:
-                        property.SetValue(instance, _randomizer.ULong());
+                        var floatValue = range == null ? _randomizer.Float() : _randomizer.FixedRangeFloat(range);
+                        property.SetValue(instance, floatValue);
                         break;
 
                     case int t:
-                        var method = this.GetType().GetMethod("GetFixedRange");
-                        var genericMethod = method.MakeGenericMethod(instance.GetType());
-                        var range = (FixedRange)genericMethod.Invoke(this, new[] { property });
-                        var value = range == null ? _randomizer.Int() : _randomizer.FixedRangeInt(range);
-                        property.SetValue(instance, value);
+                        var intValue = range == null ? _randomizer.Int() : _randomizer.FixedRangeInt(range);
+                        property.SetValue(instance, intValue);
+                        break;
+
+                    case uint t:
+                        var uintValue = range == null ? _randomizer.UInt() : _randomizer.FixedRangeUInt(range);
+                        property.SetValue(instance, uintValue);
+                        break;
+
+                    case long t:
+                        var longValue = range == null ? _randomizer.Long() : _randomizer.FixedRangeLong(range);
+                        property.SetValue(instance, longValue);
+                        break;
+
+                    case ulong t:
+                        var ulongValue = range == null ? _randomizer.ULong() : _randomizer.FixedRangeULong(range);
+                        property.SetValue(instance, ulongValue);
                         break;
                 }
             }

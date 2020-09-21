@@ -60,8 +60,9 @@ namespace Datr
         internal string String()
         {
             var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !\"£$%^&*()-=_+[]{};'#:@~,./<>?\\";
-            return new string(Enumerable.Repeat(chars, 100)
-              .Select(s => s[_random.Next(s.Length)]).ToArray());
+            var charCount = Math.Abs(Int());
+            
+            return new string(Enumerable.Repeat(chars, charCount).Select(s => s[_random.Next(s.Length)]).ToArray());
         }
 
         private int NextInt32()
@@ -91,6 +92,267 @@ namespace Datr
                 default:
                     throw new Exception("Error generating random integer within range");
             }
+        }
+
+        internal uint FixedRangeUInt(FixedRange range)
+        {
+            do
+            {
+                var num = UInt();
+                switch (range.Range)
+                {
+                    case Range.GreaterThan:
+                        if (num >= (uint)range.MinValue) return num;
+                        break;
+
+                    case Range.LessThan:
+                        if (num <= (uint)range.MaxValue) return num;
+                        break;
+
+                    case Range.Between:
+                        if (num >= (uint)range.MinValue && num <= (uint)range.MaxValue) return num;
+                        break;
+
+                    case Range.Outside:
+                        if (num < (uint)range.MinValue || num > (uint)range.MaxValue) return num;
+                        break;
+
+                    default:
+                        throw new Exception("Error generating random unsigned integer within range");
+                }
+            } while (true);
+        }
+
+        internal byte FixedRangeByte(FixedRange range)
+        {
+            do
+            {
+                var num = Byte();
+                switch (range.Range)
+                {
+                    case Range.GreaterThan:
+                        if (num >= (byte)range.MinValue) return num;
+                        break;
+
+                    case Range.LessThan:
+                        if (num <= (byte)range.MaxValue) return num;
+                        break;
+
+                    case Range.Between:
+                        if (num >= (byte)range.MinValue && num <= (byte)range.MaxValue) return num;
+                        break;
+
+                    case Range.Outside:
+                        if (num < (byte)range.MinValue || num > (byte)range.MaxValue) return num;
+                        break;
+
+                    default:
+                        throw new Exception("Error generating random byte within range");
+                }
+            } while (true);
+        }
+
+        internal sbyte FixedRangeSByte(FixedRange range)
+        {
+            do
+            {
+                var num = SByte();
+                switch (range.Range)
+                {
+                    case Range.GreaterThan:
+                        if (num >= (sbyte)range.MinValue) return num;
+                        break;
+
+                    case Range.LessThan:
+                        if (num <= (sbyte)range.MaxValue) return num;
+                        break;
+
+                    case Range.Between:
+                        if (num >= (sbyte)range.MinValue && num <= (sbyte)range.MaxValue) return num;
+                        break;
+
+                    case Range.Outside:
+                        if (num < (sbyte)range.MinValue || num > (sbyte)range.MaxValue) return num;
+                        break;
+
+                    default:
+                        throw new Exception("Error generating random signed byte within range");
+                }
+            } while (true);
+        }
+
+        internal short FixedRangeShort(FixedRange range)
+        {
+            do
+            {
+                var num = Short();
+                switch (range.Range)
+                {
+                    case Range.GreaterThan:
+                        if (num >= (short)range.MinValue) return num;
+                        break;
+
+                    case Range.LessThan:
+                        if (num <= (short)range.MaxValue) return num;
+                        break;
+
+                    case Range.Between:
+                        if (num >= (short)range.MinValue && num <= (short)range.MaxValue) return num;
+                        break;
+
+                    case Range.Outside:
+                        if (num < (short)range.MinValue || num > (short)range.MaxValue) return num;
+                        break;
+
+                    default:
+                        throw new Exception("Error generating random short within range");
+                }
+            } while (true);
+        }
+
+        internal ushort FixedRangeUShort(FixedRange range)
+        {
+            do
+            {
+                var num = UShort();
+                switch (range.Range)
+                {
+                    case Range.GreaterThan:
+                        if (num >= (ushort)range.MinValue) return num;
+                        break;
+
+                    case Range.LessThan:
+                        if (num <= (ushort)range.MaxValue) return num;
+                        break;
+
+                    case Range.Between:
+                        if (num >= (ushort)range.MinValue && num <= (ushort)range.MaxValue) return num;
+                        break;
+
+                    case Range.Outside:
+                        if (num < (ushort)range.MinValue || num > (ushort)range.MaxValue) return num;
+                        break;
+
+                    default:
+                        throw new Exception("Error generating random unsigned short within range");
+                }
+            } while (true);
+        }
+
+        internal double FixedRangeDouble(FixedRange range)
+        {
+            do
+            {
+                var num = Double();
+                switch (range.Range)
+                {
+                    case Range.GreaterThan:
+                        if (num >= (double)range.MinValue) return num;
+                        break;
+
+                    case Range.LessThan:
+                        if (num <= (double)range.MaxValue) return num;
+                        break;
+
+                    case Range.Between:
+                        if (num >= (double)range.MinValue && num <= (double)range.MaxValue) return num;
+                        break;
+
+                    case Range.Outside:
+                        if (num < (double)range.MinValue || num > (double)range.MaxValue) return num;
+                        break;
+
+                    default:
+                        throw new Exception("Error generating random double within range");
+                }
+            } while (true);
+        }
+
+        internal float FixedRangeFloat(FixedRange range)
+        {
+            do
+            {
+                var num = Float();
+                switch (range.Range)
+                {
+                    case Range.GreaterThan:
+                        if (num >= (float)range.MinValue) return num;
+                        break;
+
+                    case Range.LessThan:
+                        if (num <= (float)range.MaxValue) return num;
+                        break;
+
+                    case Range.Between:
+                        if (num >= (float)range.MinValue && num <= (float)range.MaxValue) return num;
+                        break;
+
+                    case Range.Outside:
+                        if (num < (float)range.MinValue || num > (float)range.MaxValue) return num;
+                        break;
+
+                    default:
+                        throw new Exception("Error generating random float within range");
+                }
+            } while (true);
+        }
+
+        internal long FixedRangeLong(FixedRange range)
+        {
+            do
+            {
+                var num = Long();
+                switch (range.Range)
+                {
+                    case Range.GreaterThan:
+                        if (num >= (long)range.MinValue) return num;
+                        break;
+
+                    case Range.LessThan:
+                        if (num <= (long)range.MaxValue) return num;
+                        break;
+
+                    case Range.Between:
+                        if (num >= (long)range.MinValue && num <= (long)range.MaxValue) return num;
+                        break;
+
+                    case Range.Outside:
+                        if (num < (long)range.MinValue || num > (long)range.MaxValue) return num;
+                        break;
+
+                    default:
+                        throw new Exception("Error generating random long within range");
+                }
+            } while (true);
+        }
+
+        internal ulong FixedRangeULong(FixedRange range)
+        {
+            do
+            {
+                var num = ULong();
+                switch (range.Range)
+                {
+                    case Range.GreaterThan:
+                        if (num >= (ulong)range.MinValue) return num;
+                        break;
+
+                    case Range.LessThan:
+                        if (num <= (ulong)range.MaxValue) return num;
+                        break;
+
+                    case Range.Between:
+                        if (num >= (ulong)range.MinValue && num <= (ulong)range.MaxValue) return num;
+                        break;
+
+                    case Range.Outside:
+                        if (num < (ulong)range.MinValue || num > (ulong)range.MaxValue) return num;
+                        break;
+
+                    default:
+                        throw new Exception("Error generating random unsigned long within range");
+                }
+            } while (true);
         }
 
         #endregion
