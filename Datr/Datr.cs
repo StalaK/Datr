@@ -159,6 +159,406 @@ namespace Datr
             FixedRanges.Add(uintRange);
         }
 
+        public void SetDecimalRange<T>(string propertyName, Range range, decimal? minValue = null, decimal? maxValue = null)
+        {
+            if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetDecimalRange: minValue and maxValue parameters must be set when using a range of Between or Outside.");
+            }
+
+            if (maxValue <= minValue && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetDecimalRange: maxValue cannot be less than or equal to minValue when using a range of Between or Outside");
+            }
+
+            if (minValue == null && range == Range.GreaterThan)
+            {
+                throw new ArgumentException("SetDecimalRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (maxValue == null && range == Range.LessThan)
+            {
+                throw new ArgumentException("SetDecimalRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (minValue == decimal.MaxValue)
+            {
+                throw new ArgumentException("SetDecimalRange: minValue cannot be equal to uint.MaxValue");
+            }
+
+            if (maxValue == decimal.MinValue)
+            {
+                throw new ArgumentException("SetDecimalRange: maxValue cannot be equal to uint.MinValue");
+            }
+
+            if (!HasProperty<T, decimal>(propertyName))
+            {
+                throw new ArgumentException($"SetDecimalRange: The type {typeof(T).Name} does not contain the property {propertyName}");
+            }
+
+            var decimalRange = new FixedRange
+            {
+                DataType = typeof(decimal),
+                ClassType = typeof(T),
+                PropertyName = propertyName,
+                Range = range,
+                MinValue = minValue,
+                MaxValue = maxValue
+            };
+
+            FixedRanges.Add(decimalRange);
+        }
+
+        public void SetSByteRange<T>(string propertyName, Range range, sbyte? minValue = null, sbyte? maxValue = null)
+        {
+            if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetSByteRange: minValue and maxValue parameters must be set when using a range of Between or Outside.");
+            }
+
+            if (maxValue <= minValue && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetSByteRange: maxValue cannot be less than or equal to minValue when using a range of Between or Outside");
+            }
+
+            if (minValue == null && range == Range.GreaterThan)
+            {
+                throw new ArgumentException("SetSByteRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (maxValue == null && range == Range.LessThan)
+            {
+                throw new ArgumentException("SetSByteRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (minValue == sbyte.MaxValue)
+            {
+                throw new ArgumentException("SetSByteRange: minValue cannot be equal to uint.MaxValue");
+            }
+
+            if (maxValue == sbyte.MinValue)
+            {
+                throw new ArgumentException("SetSByteRange: maxValue cannot be equal to uint.MinValue");
+            }
+
+            if (!HasProperty<T, sbyte>(propertyName))
+            {
+                throw new ArgumentException($"SetSByteRange: The type {typeof(T).Name} does not contain the property {propertyName}");
+            }
+
+            var decimalRange = new FixedRange
+            {
+                DataType = typeof(sbyte),
+                ClassType = typeof(T),
+                PropertyName = propertyName,
+                Range = range,
+                MinValue = minValue,
+                MaxValue = maxValue
+            };
+
+            FixedRanges.Add(decimalRange);
+        }
+
+        public void SetByteRange<T>(string propertyName, Range range, byte? minValue = null, byte? maxValue = null)
+        {
+            if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetByteRange: minValue and maxValue parameters must be set when using a range of Between or Outside.");
+            }
+
+            if (maxValue <= minValue && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetByteRange: maxValue cannot be less than or equal to minValue when using a range of Between or Outside");
+            }
+
+            if (minValue == null && range == Range.GreaterThan)
+            {
+                throw new ArgumentException("SetByteRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (maxValue == null && range == Range.LessThan)
+            {
+                throw new ArgumentException("SetByteRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (minValue == byte.MaxValue)
+            {
+                throw new ArgumentException("SetByteRange: minValue cannot be equal to uint.MaxValue");
+            }
+
+            if (maxValue == byte.MinValue)
+            {
+                throw new ArgumentException("SetByteRange: maxValue cannot be equal to uint.MinValue");
+            }
+
+            if (!HasProperty<T, byte>(propertyName))
+            {
+                throw new ArgumentException($"SetByteRange: The type {typeof(T).Name} does not contain the property {propertyName}");
+            }
+
+            var decimalRange = new FixedRange
+            {
+                DataType = typeof(byte),
+                ClassType = typeof(T),
+                PropertyName = propertyName,
+                Range = range,
+                MinValue = minValue,
+                MaxValue = maxValue
+            };
+
+            FixedRanges.Add(decimalRange);
+        }
+
+        public void SetShortRange<T>(string propertyName, Range range, short? minValue = null, short? maxValue = null)
+        {
+            if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetShortRange: minValue and maxValue parameters must be set when using a range of Between or Outside.");
+            }
+
+            if (maxValue <= minValue && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetShortRange: maxValue cannot be less than or equal to minValue when using a range of Between or Outside");
+            }
+
+            if (minValue == null && range == Range.GreaterThan)
+            {
+                throw new ArgumentException("SetShortRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (maxValue == null && range == Range.LessThan)
+            {
+                throw new ArgumentException("SetShortRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (minValue == short.MaxValue)
+            {
+                throw new ArgumentException("SetShortRange: minValue cannot be equal to uint.MaxValue");
+            }
+
+            if (maxValue == short.MinValue)
+            {
+                throw new ArgumentException("SetShortRange: maxValue cannot be equal to uint.MinValue");
+            }
+
+            if (!HasProperty<T, short>(propertyName))
+            {
+                throw new ArgumentException($"SetShortRange: The type {typeof(T).Name} does not contain the property {propertyName}");
+            }
+
+            var shortRange = new FixedRange
+            {
+                DataType = typeof(short),
+                ClassType = typeof(T),
+                PropertyName = propertyName,
+                Range = range,
+                MinValue = minValue,
+                MaxValue = maxValue
+            };
+
+            FixedRanges.Add(shortRange);
+        }
+
+        public void SetUShortRange<T>(string propertyName, Range range, ushort? minValue = null, ushort? maxValue = null)
+        {
+            if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetUShortRange: minValue and maxValue parameters must be set when using a range of Between or Outside.");
+            }
+
+            if (maxValue <= minValue && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetUShortRange: maxValue cannot be less than or equal to minValue when using a range of Between or Outside");
+            }
+
+            if (minValue == null && range == Range.GreaterThan)
+            {
+                throw new ArgumentException("SetUShortRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (maxValue == null && range == Range.LessThan)
+            {
+                throw new ArgumentException("SetUShortRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (minValue == ushort.MaxValue)
+            {
+                throw new ArgumentException("SetUShortRange: minValue cannot be equal to uint.MaxValue");
+            }
+
+            if (maxValue == ushort.MinValue)
+            {
+                throw new ArgumentException("SetUShortRange: maxValue cannot be equal to uint.MinValue");
+            }
+
+            if (!HasProperty<T, ushort>(propertyName))
+            {
+                throw new ArgumentException($"SetUShortRange: The type {typeof(T).Name} does not contain the property {propertyName}");
+            }
+
+            var ushortRange = new FixedRange
+            {
+                DataType = typeof(ushort),
+                ClassType = typeof(T),
+                PropertyName = propertyName,
+                Range = range,
+                MinValue = minValue,
+                MaxValue = maxValue
+            };
+
+            FixedRanges.Add(ushortRange);
+        }
+
+        public void SetFloatRange<T>(string propertyName, Range range, float? minValue = null, float? maxValue = null)
+        {
+            if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetFloatRange: minValue and maxValue parameters must be set when using a range of Between or Outside.");
+            }
+
+            if (maxValue <= minValue && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetFloatRange: maxValue cannot be less than or equal to minValue when using a range of Between or Outside");
+            }
+
+            if (minValue == null && range == Range.GreaterThan)
+            {
+                throw new ArgumentException("SetFloatRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (maxValue == null && range == Range.LessThan)
+            {
+                throw new ArgumentException("SetFloatRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (minValue == float.MaxValue)
+            {
+                throw new ArgumentException("SetFloatRange: minValue cannot be equal to uint.MaxValue");
+            }
+
+            if (maxValue == float.MinValue)
+            {
+                throw new ArgumentException("SetFloatRange: maxValue cannot be equal to uint.MinValue");
+            }
+
+            if (!HasProperty<T, float>(propertyName))
+            {
+                throw new ArgumentException($"SetFloatRange: The type {typeof(T).Name} does not contain the property {propertyName}");
+            }
+
+            var floatRange = new FixedRange
+            {
+                DataType = typeof(float),
+                ClassType = typeof(T),
+                PropertyName = propertyName,
+                Range = range,
+                MinValue = minValue,
+                MaxValue = maxValue
+            };
+
+            FixedRanges.Add(floatRange);
+        }
+
+        public void SetLongRange<T>(string propertyName, Range range, long? minValue = null, long? maxValue = null)
+        {
+            if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetLongRange: minValue and maxValue parameters must be set when using a range of Between or Outside.");
+            }
+
+            if (maxValue <= minValue && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetLongRange: maxValue cannot be less than or equal to minValue when using a range of Between or Outside");
+            }
+
+            if (minValue == null && range == Range.GreaterThan)
+            {
+                throw new ArgumentException("SetLongRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (maxValue == null && range == Range.LessThan)
+            {
+                throw new ArgumentException("SetLongRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (minValue == long.MaxValue)
+            {
+                throw new ArgumentException("SetLongRange: minValue cannot be equal to uint.MaxValue");
+            }
+
+            if (maxValue == long.MinValue)
+            {
+                throw new ArgumentException("SetLongRange: maxValue cannot be equal to uint.MinValue");
+            }
+
+            if (!HasProperty<T, long>(propertyName))
+            {
+                throw new ArgumentException($"SetLongRange: The type {typeof(T).Name} does not contain the property {propertyName}");
+            }
+
+            var longRange = new FixedRange
+            {
+                DataType = typeof(long),
+                ClassType = typeof(T),
+                PropertyName = propertyName,
+                Range = range,
+                MinValue = minValue,
+                MaxValue = maxValue
+            };
+
+            FixedRanges.Add(longRange);
+        }
+
+        public void SetULongRange<T>(string propertyName, Range range, ulong? minValue = null, ulong? maxValue = null)
+        {
+            if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetULongRange: minValue and maxValue parameters must be set when using a range of Between or Outside.");
+            }
+
+            if (maxValue <= minValue && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetULongRange: maxValue cannot be less than or equal to minValue when using a range of Between or Outside");
+            }
+
+            if (minValue == null && range == Range.GreaterThan)
+            {
+                throw new ArgumentException("SetULongRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (maxValue == null && range == Range.LessThan)
+            {
+                throw new ArgumentException("SetULongRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (minValue == ulong.MaxValue)
+            {
+                throw new ArgumentException("SetULongRange: minValue cannot be equal to uint.MaxValue");
+            }
+
+            if (maxValue == ulong.MinValue)
+            {
+                throw new ArgumentException("SetULongRange: maxValue cannot be equal to uint.MinValue");
+            }
+
+            if (!HasProperty<T, ulong>(propertyName))
+            {
+                throw new ArgumentException($"SetULongRange: The type {typeof(T).Name} does not contain the property {propertyName}");
+            }
+
+            var ulongRange = new FixedRange
+            {
+                DataType = typeof(ulong),
+                ClassType = typeof(T),
+                PropertyName = propertyName,
+                Range = range,
+                MinValue = minValue,
+                MaxValue = maxValue
+            };
+
+            FixedRanges.Add(ulongRange);
+        }
+
         public void SetStringRange<T>(string propertyName, Range range, int? minValue = null, int? maxValue = null)
         {
             if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
@@ -181,7 +581,7 @@ namespace Datr
                 throw new ArgumentException("SetStringRange: minValue must not be null when using the GreaterThan range");
             }
 
-            if (minValue == uint.MaxValue)
+            if (minValue == int.MaxValue)
             {
                 throw new ArgumentException("SetStringRange: minValue cannot be equal to uint.MaxValue");
             }
@@ -191,9 +591,9 @@ namespace Datr
                 throw new ArgumentException("SetStringRange: minValue and maxValue cannot less than or equal to zero");
             }
 
-            if (!HasProperty<T, uint>(propertyName))
+            if (!HasProperty<T, string>(propertyName))
             {
-                throw new ArgumentException($"SetUIntRange: The type {typeof(T).Name} does not contain the property {propertyName}");
+                throw new ArgumentException($"SetStringRange: The type {typeof(T).Name} does not contain the property {propertyName}");
             }
 
             var stringRange = new FixedRange
