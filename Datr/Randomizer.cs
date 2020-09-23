@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Linq;
 
 namespace Datr
@@ -63,6 +64,12 @@ namespace Datr
             var charCount = Math.Abs(Int());
             
             return new string(Enumerable.Repeat(chars, charCount).Select(s => s[_random.Next(s.Length)]).ToArray());
+        }
+
+        internal DateTime DateTime()
+        {
+            var ticks = Math.Abs(Long());
+            return new DateTime(ticks);
         }
 
         private int NextInt32()
@@ -235,6 +242,35 @@ namespace Datr
 
                     default:
                         throw new Exception("Error generating random unsigned short within range");
+                }
+            } while (true);
+        }
+
+        internal decimal FixedRangeDecimal(FixedRange range)
+        {
+            do
+            {
+                var num = Decimal();
+                switch (range.Range)
+                {
+                    case Range.GreaterThan:
+                        if (num >= (decimal)range.MinValue) return num;
+                        break;
+
+                    case Range.LessThan:
+                        if (num <= (decimal)range.MaxValue) return num;
+                        break;
+
+                    case Range.Between:
+                        if (num >= (decimal)range.MinValue && num <= (decimal)range.MaxValue) return num;
+                        break;
+
+                    case Range.Outside:
+                        if (num < (decimal)range.MinValue || num > (decimal)range.MaxValue) return num;
+                        break;
+
+                    default:
+                        throw new Exception("Error generating random decimal within range");
                 }
             } while (true);
         }

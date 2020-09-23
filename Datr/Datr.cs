@@ -697,7 +697,16 @@ namespace Datr
             else
             {
                 if (property.PropertyType == typeof(decimal))
-                        property.SetValue(instance, _randomizer.Decimal());
+                {
+                    var decimalValue = range == null ? _randomizer.Decimal() : _randomizer.FixedRangeDecimal(range);
+                    property.SetValue(instance, decimalValue);
+                }
+
+                if (property.PropertyType == typeof(DateTime))
+                {
+                    var dateTimeValue = _randomizer.DateTime();
+                    property.SetValue(instance, dateTimeValue);
+                }
             }
 
             if (property.PropertyType.IsClass)

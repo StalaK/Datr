@@ -1,5 +1,6 @@
 ﻿using Datr.Test.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 
 namespace Datr.Test.Tests
@@ -96,6 +97,14 @@ namespace Datr.Test.Tests
         {
             var primitives = Setup();
             Assert.IsNotNull(primitives.Int);
+        }
+
+        [TestMethod]
+        public void DateTimePopulated()
+        {
+            var primitives = Setup();
+            Assert.IsNotNull(primitives.DateTime);
+            Assert.AreNotEqual(new DateTime(), primitives.DateTime);
         }
 
         [TestMethod]

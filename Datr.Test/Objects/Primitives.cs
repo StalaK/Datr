@@ -1,7 +1,10 @@
-﻿namespace Datr.Test.Objects
+﻿using System;
+
+namespace Datr.Test.Objects
 {
     public class Primitives
     {
+        public DateTime DateTime { get; set; }
         public bool Bool { get; set; }
         public sbyte SByte { get; set; }
         public byte Byte { get; set; }
