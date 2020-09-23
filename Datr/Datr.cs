@@ -146,9 +146,9 @@ namespace Datr
                 throw new ArgumentException($"SetUIntRange: The type {typeof(T).Name} does not contain the property {propertyName}");
             }
 
-            var intRange = new FixedRange
+            var uintRange = new FixedRange
             {
-                DataType = typeof(int),
+                DataType = typeof(uint),
                 ClassType = typeof(T),
                 PropertyName = propertyName,
                 Range = range,
@@ -156,7 +156,57 @@ namespace Datr
                 MaxValue = maxValue
             };
 
-            FixedRanges.Add(intRange);
+            FixedRanges.Add(uintRange);
+        }
+
+        public void SetStringRange<T>(string propertyName, Range range, int? minValue = null, int? maxValue = null)
+        {
+            if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetStringRange: minValue and maxValue parameters must be set when using a range of Between or Outside.");
+            }
+
+            if (maxValue <= minValue && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetStringRange: maxValue cannot be less than or equal to minValue when using a range of Between or Outside");
+            }
+
+            if (minValue == null && range == Range.GreaterThan)
+            {
+                throw new ArgumentException("SetStringRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (maxValue == null && range == Range.LessThan)
+            {
+                throw new ArgumentException("SetStringRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (minValue == uint.MaxValue)
+            {
+                throw new ArgumentException("SetStringRange: minValue cannot be equal to uint.MaxValue");
+            }
+
+            if (minValue <= 0 || maxValue <= 0)
+            {
+                throw new ArgumentException("SetStringRange: minValue and maxValue cannot less than or equal to zero");
+            }
+
+            if (!HasProperty<T, uint>(propertyName))
+            {
+                throw new ArgumentException($"SetUIntRange: The type {typeof(T).Name} does not contain the property {propertyName}");
+            }
+
+            var stringRange = new FixedRange
+            {
+                DataType = typeof(string),
+                ClassType = typeof(T),
+                PropertyName = propertyName,
+                Range = range,
+                MinValue = minValue,
+                MaxValue = maxValue
+            };
+
+            FixedRanges.Add(stringRange);
         }
 
         private bool IgnoreProperty<T>(PropertyInfo property)
@@ -176,13 +226,13 @@ namespace Datr
 
         private void SetRandomPropertyValue<T>(PropertyInfo property, T instance)
         {
+            var method = this.GetType().GetMethod("GetFixedRange");
+            var genericMethod = method.MakeGenericMethod(instance.GetType());
+            var range = (FixedRange)genericMethod.Invoke(this, new[] { property });
+
             if (property.PropertyType.IsPrimitive)
             {
                 var propertyInstance = Activator.CreateInstance(property.PropertyType);
-                var method = this.GetType().GetMethod("GetFixedRange");
-                var genericMethod = method.MakeGenericMethod(instance.GetType());
-                var range = (FixedRange)genericMethod.Invoke(this, new[] { property });
-
                 switch (propertyInstance)
                 {
                     case bool t:
@@ -254,13 +304,14 @@ namespace Datr
             {
                 if (property.PropertyType == typeof(string))
                 {
-                    property.SetValue(instance, _randomizer.String());
+                    var stringValue = range == null ? _randomizer.String() : _randomizer.FixedRangeString(range);
+                    property.SetValue(instance, stringValue);
                 }
                 else
                 {
-                    var method = this.GetType().GetMethod("Create");
-                    var genericMethod = method.MakeGenericMethod(property.PropertyType);
-                    var populatedClass = genericMethod.Invoke(this, null);
+                    var createMethod = this.GetType().GetMethod("Create");
+                    var genericCreateMethod = createMethod.MakeGenericMethod(property.PropertyType);
+                    var populatedClass = genericCreateMethod.Invoke(this, null);
                     property.SetValue(instance, populatedClass);
                 }
             }

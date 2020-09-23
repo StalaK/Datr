@@ -355,6 +355,14 @@ namespace Datr
             } while (true);
         }
 
+        internal string FixedRangeString(FixedRange range)
+        {
+            var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !\"£$%^&*()-=_+[]{};'#:@~,./<>?\\";
+            int charCount = FixedRangeInt(range);
+
+            return new string(Enumerable.Repeat(chars, charCount).Select(s => s[_random.Next(s.Length)]).ToArray());
+        }
+
         #endregion
     }
 }
