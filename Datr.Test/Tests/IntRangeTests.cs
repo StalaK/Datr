@@ -30,7 +30,7 @@ namespace Datr.Test.Tests
             for (int i = 0; i < 100; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
-                Assert.IsTrue(basicClass.Int < 100, $"Value generated is {basicClass.Int}");
+                Assert.IsTrue(basicClass.Int <= 100, $"Value generated is {basicClass.Int}");
             }
         }
 
@@ -57,7 +57,7 @@ namespace Datr.Test.Tests
             {
                 var basicClass = datr.Create<BasicClass>();
                 Assert.IsTrue(basicClass.Int >= -50, $"Value generated is {basicClass.Int}");
-                Assert.IsTrue(basicClass.Int < 50, $"Value generated is {basicClass.Int}");
+                Assert.IsTrue(basicClass.Int <= 50, $"Value generated is {basicClass.Int}");
             }
         }
 
