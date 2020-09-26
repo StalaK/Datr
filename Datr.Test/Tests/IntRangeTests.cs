@@ -29,8 +29,8 @@ namespace Datr.Test.Tests
 
             for (int i = 0; i < 100; i++)
             {
-                var primitives = datr.Create<BasicClass>();
-                Assert.IsTrue(primitives.Int < 100, $"Value generated is {primitives.Int}");
+                var basicClass = datr.Create<BasicClass>();
+                Assert.IsTrue(basicClass.Int < 100, $"Value generated is {basicClass.Int}");
             }
         }
 
@@ -42,8 +42,8 @@ namespace Datr.Test.Tests
 
             for (int i = 0; i < 100; i++)
             {
-                var primitives = datr.Create<BasicClass>();
-                Assert.IsTrue(primitives.Int >= 100, $"Value generated is {primitives.Int}");
+                var basicClass = datr.Create<BasicClass>();
+                Assert.IsTrue(basicClass.Int >= 100, $"Value generated is {basicClass.Int}");
             }
         }
 
@@ -55,9 +55,9 @@ namespace Datr.Test.Tests
 
             for (int i = 0; i < 100; i++)
             {
-                var primitives = datr.Create<BasicClass>();
-                Assert.IsTrue(primitives.Int >= -50, $"Value generated is {primitives.Int}");
-                Assert.IsTrue(primitives.Int < 50, $"Value generated is {primitives.Int}");
+                var basicClass = datr.Create<BasicClass>();
+                Assert.IsTrue(basicClass.Int >= -50, $"Value generated is {basicClass.Int}");
+                Assert.IsTrue(basicClass.Int < 50, $"Value generated is {basicClass.Int}");
             }
         }
 
@@ -69,8 +69,8 @@ namespace Datr.Test.Tests
 
             for (int i = 0; i < 100; i++)
             {
-                var primitives = datr.Create<BasicClass>();
-                Assert.IsTrue(primitives.Int < -50 || primitives.Int >= 50, $"Value generated is {primitives.Int}");
+                var basicClass = datr.Create<BasicClass>();
+                Assert.IsTrue(basicClass.Int < -50 || basicClass.Int >= 50, $"Value generated is {basicClass.Int}");
             }
         }
 

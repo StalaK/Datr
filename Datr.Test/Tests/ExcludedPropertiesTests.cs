@@ -7,68 +7,68 @@ namespace Datr.Test.Tests
     [TestClass]
     public class ExcludedPropertiesTests
     {
-        //[TestMethod]
-        //public void ExcludedPropertiesByName()
-        //{
-        //    var datr = new Datr();
-        //    datr.ExcludedPropertyNames.Add("Primitives");
+        [TestMethod]
+        public void ExcludePropetiesByName()
+        {
+            var datr = new Datr
+            {
+                ExcludedPropertyNames = new List<string> { "Int", "Char" }
+            };
 
-        //    var classes = datr.Create<ClassWithClassProperty>();
+            var basicClass= datr.Create<BasicClass>();
 
-        //    Assert.IsNull(classes.BasicClass);
-        //    Assert.IsNotNull(classes.Strings1);
-        //}
+            Assert.AreEqual(0, basicClass.Int);
+            Assert.AreEqual(0, (int)basicClass.Char);
+        }
 
-        //[TestMethod]
-        //public void ExcludedPropertiesByTypeAndName()
-        //{
-        //    var datr = new Datr()
-        //    {
-        //        ExcludedTypeProperties = new List<TypeProperty>
-        //        {
-        //            new TypeProperty(typeof(ClassWithClassProperty), "strings1")
-        //        }
-        //    };
+        [TestMethod]
+        public void ExcludePropetiesByTypeAndName()
+        {
+            var datr = new Datr
+            {
+                ExcludedTypeProperties = new List<TypeProperty>
+                {
+                    new TypeProperty(typeof(BasicClass), "Int"),
+                    new TypeProperty(typeof(BasicClass), "NotChar"),
+                }
+            };
 
-        //    var classes = datr.Create<ClassWithClassProperty>();
+            var basicClass = datr.Create<BasicClass>();
 
-        //    Assert.IsNull(classes.Strings1);
-        //    Assert.IsNotNull(classes.BasicClass);
-        //    Assert.IsNotNull(classes.Strings2);
-        //}
+            Assert.AreEqual(0, basicClass.Int);
+            Assert.IsNotNull(basicClass.Char);
+        }
 
-        //[TestMethod]
-        //public void ExcludedClassPropertyPropertiesByTypeAndName()
-        //{
-        //    var datr = new Datr()
-        //    {
-        //        ExcludedTypeProperties = new List<TypeProperty>
-        //        {
-        //            new TypeProperty(typeof(Strings), "string1")
-        //        }
-        //    };
+        [TestMethod]
+        public void ExcludeInheritedPropetiesByName()
+        {
+            var datr = new Datr
+            {
+                ExcludedPropertyNames = new List<string> { "ParentInt", "ParentString" }
+            };
 
-        //    var childClass = datr.Create<ChildClass>();
+            var childClass = datr.Create<ChildClass>();
 
-        //    Assert.IsNull(childClass.ChildStrings.String1);
-        //    Assert.IsNull(childClass.ParentStrings.String1);
-        //    Assert.IsFalse(string.IsNullOrEmpty(childClass.ChildStrings.String2));
-        //    Assert.IsFalse(string.IsNullOrEmpty(childClass.ParentStrings.String2));
-        //}
+            Assert.AreEqual(0, childClass.ParentInt);
+            Assert.IsTrue(string.IsNullOrEmpty(childClass.ParentString));
+        }
 
-        //[TestMethod]
-        //public void InheritedClassPropertiesExcludedByTypeAndName()
-        //{
-        //    var datr = new Datr()
-        //    {
-        //        ExcludedTypeProperties = new List<TypeProperty>
-        //        {
-        //            new TypeProperty(typeof(ChildClass), "ParentStrings")
-        //        }
-        //    };
+        [TestMethod]
+        public void ExcludeInheritedPropetiesByTypeAndName()
+        {
+            var datr = new Datr
+            {
+                ExcludedTypeProperties = new List<TypeProperty>
+                {
+                    new TypeProperty(typeof(ChildClass), "ParentInt"),
+                    new TypeProperty(typeof(ParentClass), "ParentString"),
+                }
+            };
 
-        //    var childClass = datr.Create<ChildClass>();
-        //    Assert.IsNull(childClass.ParentStrings);
-        //}
+            var childClass = datr.Create<ChildClass>();
+
+            Assert.AreEqual(0, childClass.ParentInt);
+            Assert.IsFalse(string.IsNullOrEmpty(childClass.ParentString));
+        }
     }
 }

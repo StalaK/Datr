@@ -1,7 +1,6 @@
 ﻿using Datr.Test.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 
 namespace Datr.Test.Tests
 {
@@ -105,38 +104,6 @@ namespace Datr.Test.Tests
             var primitives = Setup();
             Assert.IsNotNull(primitives.DateTime);
             Assert.AreNotEqual(new DateTime(), primitives.DateTime);
-        }
-
-        [TestMethod]
-        public void ExcludePropetiesByName()
-        {
-            var datr = new Datr
-            {
-                ExcludedPropertyNames = new List<string> { "Int", "Char" }
-            };
-
-            var primitives = datr.Create<BasicClass>();
-
-            Assert.AreEqual(0, primitives.Int);
-            Assert.AreEqual(0, (int)primitives.Char);
-        }
-
-        [TestMethod]
-        public void ExcludePropetiesByTypeAndName()
-        {
-            var datr = new Datr
-            {
-                ExcludedTypeProperties = new List<TypeProperty>
-                {
-                    new TypeProperty(typeof(BasicClass), "Int"),
-                    new TypeProperty(typeof(BasicClass), "NotChar"),
-                }
-            };
-
-            var primitives = datr.Create<BasicClass>();
-
-            Assert.AreEqual(0, primitives.Int);
-            Assert.IsNotNull(primitives.Char);
         }
 
         private BasicClass Setup()

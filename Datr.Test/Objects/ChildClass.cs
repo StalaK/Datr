@@ -4,6 +4,6 @@
     {
         public int ChildInt { get; set; }
         public string ChildString { get; set; }
-        public BasicClass ChildPrimitives { get; set; }
+        public BasicClass ChildSubClass { get; set; }
     }
 }
