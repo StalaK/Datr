@@ -2,8 +2,9 @@
 
 namespace Datr.Test.Objects
 {
-    public class Primitives
+    public class BasicClass
     {
+        public string String { get; set; }
         public DateTime DateTime { get; set; }
         public bool Bool { get; set; }
         public sbyte SByte { get; set; }

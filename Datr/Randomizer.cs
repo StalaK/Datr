@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Linq;
 
 namespace Datr
@@ -61,7 +60,7 @@ namespace Datr
         internal string String()
         {
             var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !\"£$%^&*()-=_+[]{};'#:@~,./<>?\\";
-            var charCount = Math.Abs(Int());
+            var charCount = Math.Abs(Short());
             
             return new string(Enumerable.Repeat(chars, charCount).Select(s => s[_random.Next(s.Length)]).ToArray());
         }

@@ -11,11 +11,11 @@ namespace Datr.Test.Tests
         public void AddIntRangeToList()
         {
             var datr = new Datr();
-            datr.SetIntRange<Primitives>("Int", Range.GreaterThan, 100);
+            datr.SetIntRange<BasicClass>("Int", Range.GreaterThan, 100);
 
             Assert.AreEqual(1, datr.FixedRanges.Count);
             Assert.AreEqual(typeof(int), datr.FixedRanges[0].DataType);
-            Assert.AreEqual(typeof(Primitives), datr.FixedRanges[0].ClassType);
+            Assert.AreEqual(typeof(BasicClass), datr.FixedRanges[0].ClassType);
             Assert.AreEqual(Range.GreaterThan, datr.FixedRanges[0].Range);
             Assert.AreEqual(100, datr.FixedRanges[0].MinValue);
             Assert.IsNull(datr.FixedRanges[0].MaxValue);
@@ -25,11 +25,11 @@ namespace Datr.Test.Tests
         public void IntRangeLessThan()
         {
             var datr = new Datr();
-            datr.SetIntRange<Primitives>("Int", Range.LessThan, maxValue: 100);
+            datr.SetIntRange<BasicClass>("Int", Range.LessThan, maxValue: 100);
 
             for (int i = 0; i < 100; i++)
             {
-                var primitives = datr.Create<Primitives>();
+                var primitives = datr.Create<BasicClass>();
                 Assert.IsTrue(primitives.Int < 100, $"Value generated is {primitives.Int}");
             }
         }
@@ -38,11 +38,11 @@ namespace Datr.Test.Tests
         public void IntRangeGreaterThan()
         {
             var datr = new Datr();
-            datr.SetIntRange<Primitives>("Int", Range.GreaterThan, 100);
+            datr.SetIntRange<BasicClass>("Int", Range.GreaterThan, 100);
 
             for (int i = 0; i < 100; i++)
             {
-                var primitives = datr.Create<Primitives>();
+                var primitives = datr.Create<BasicClass>();
                 Assert.IsTrue(primitives.Int >= 100, $"Value generated is {primitives.Int}");
             }
         }
@@ -51,11 +51,11 @@ namespace Datr.Test.Tests
         public void IntRangeBetween()
         {
             var datr = new Datr();
-            datr.SetIntRange<Primitives>("Int", Range.Between, -50, 50);
+            datr.SetIntRange<BasicClass>("Int", Range.Between, -50, 50);
 
             for (int i = 0; i < 100; i++)
             {
-                var primitives = datr.Create<Primitives>();
+                var primitives = datr.Create<BasicClass>();
                 Assert.IsTrue(primitives.Int >= -50, $"Value generated is {primitives.Int}");
                 Assert.IsTrue(primitives.Int < 50, $"Value generated is {primitives.Int}");
             }
@@ -65,11 +65,11 @@ namespace Datr.Test.Tests
         public void IntRangeOutside()
         {
             var datr = new Datr();
-            datr.SetIntRange<Primitives>("Int", Range.Outside, -50, 50);
+            datr.SetIntRange<BasicClass>("Int", Range.Outside, -50, 50);
 
             for (int i = 0; i < 100; i++)
             {
-                var primitives = datr.Create<Primitives>();
+                var primitives = datr.Create<BasicClass>();
                 Assert.IsTrue(primitives.Int < -50 || primitives.Int >= 50, $"Value generated is {primitives.Int}");
             }
         }
@@ -78,84 +78,84 @@ namespace Datr.Test.Tests
         public void IntRangeMinValueNullBetweenRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<Primitives>("Int", Range.Between, maxValue: 100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<BasicClass>("Int", Range.Between, maxValue: 100));
         }
 
         [TestMethod]
         public void IntRangeMinValueNullOutsideRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<Primitives>("Int", Range.Outside, maxValue: 100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<BasicClass>("Int", Range.Outside, maxValue: 100));
         }
 
         [TestMethod]
         public void IntRangeMaxValueNullBetweenRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<Primitives>("Int", Range.Between, minValue: 100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<BasicClass>("Int", Range.Between, minValue: 100));
         }
 
         [TestMethod]
         public void IntRangeMaxValueNullOutsideRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<Primitives>("Int", Range.Outside, minValue: 100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<BasicClass>("Int", Range.Outside, minValue: 100));
         }
 
         [TestMethod]
         public void IntRangeMinValueNullGreaterThanRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<Primitives>("Int", Range.GreaterThan, maxValue: 100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<BasicClass>("Int", Range.GreaterThan, maxValue: 100));
         }
 
         [TestMethod]
         public void IntRangeMaxValueNullLessThanRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<Primitives>("Int", Range.LessThan, minValue: 100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<BasicClass>("Int", Range.LessThan, minValue: 100));
         }
 
         [TestMethod]
         public void IntRangeMaxValueEqualMinValueBetweenRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<Primitives>("Int", Range.Between, minValue: 100, maxValue: 100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<BasicClass>("Int", Range.Between, minValue: 100, maxValue: 100));
         }
 
         [TestMethod]
         public void IntRangeMaxValueEqualMinValueOutsideRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<Primitives>("Int", Range.Between, minValue: 100, maxValue: 100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<BasicClass>("Int", Range.Between, minValue: 100, maxValue: 100));
         }
 
         [TestMethod]
         public void IntRangeMaxValueLessThanMinValueBetweenRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<Primitives>("Int", Range.Between, minValue: 100, maxValue: 90));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<BasicClass>("Int", Range.Between, minValue: 100, maxValue: 90));
         }
 
         [TestMethod]
         public void IntRangeMaxValueLessThanMinValueOutsideRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<Primitives>("Int", Range.Between, minValue: 100, maxValue: 90));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<BasicClass>("Int", Range.Between, minValue: 100, maxValue: 90));
         }
 
         [TestMethod]
         public void IntRangeMinValueEqualsIntMax()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<Primitives>("Int", Range.GreaterThan, minValue: int.MaxValue));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<BasicClass>("Int", Range.GreaterThan, minValue: int.MaxValue));
         }
 
         [TestMethod]
         public void IntRangeMaxValueEqualsIntMin()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<Primitives>("Int", Range.LessThan, maxValue: int.MinValue));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetIntRange<BasicClass>("Int", Range.LessThan, maxValue: int.MinValue));
         }
     }
 }
