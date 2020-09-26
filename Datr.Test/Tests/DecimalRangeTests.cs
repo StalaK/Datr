@@ -27,7 +27,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.SetDecimalRange<BasicClass>("Decimal", Range.LessThan, maxValue: (decimal)100);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
                 Assert.IsTrue(basicClass.Decimal <= (decimal)100, $"Value generated is {basicClass.Decimal}");
@@ -40,7 +40,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.SetDecimalRange<BasicClass>("Decimal", Range.GreaterThan, (decimal)100);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
                 Assert.IsTrue(basicClass.Decimal >= (decimal)100, $"Value generated is {basicClass.Decimal}");
@@ -53,7 +53,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.SetDecimalRange<BasicClass>("Decimal", Range.Between, (decimal)5, (decimal)50);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
                 Assert.IsTrue(basicClass.Decimal >= (decimal)5, $"Value generated is {basicClass.Decimal}");
@@ -67,7 +67,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.SetDecimalRange<BasicClass>("Decimal", Range.Outside, (decimal)5, (decimal)50);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
                 Assert.IsTrue(basicClass.Decimal < (decimal)5 || basicClass.Decimal >= (decimal)50, $"Value generated is {basicClass.Decimal}");

@@ -27,7 +27,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.SetDoubleRange<BasicClass>("Double", Range.LessThan, maxValue: (double)0.3);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
                 Assert.IsTrue(basicClass.Double <= (double)0.3, $"Value generated is {basicClass.Double}");
@@ -40,7 +40,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.SetDoubleRange<BasicClass>("Double", Range.GreaterThan, (double)0.3);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
                 Assert.IsTrue(basicClass.Double >= (double)0.3, $"Value generated is {basicClass.Double}");
@@ -53,7 +53,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.SetDoubleRange<BasicClass>("Double", Range.Between, (double)0.12345, (double)0.5678);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
                 Assert.IsTrue(basicClass.Double >= (double)0.12345, $"Value generated is {basicClass.Double}");
@@ -67,7 +67,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.SetDoubleRange<BasicClass>("Double", Range.Outside, (double)0.12345, (double)0.5678);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
                 Assert.IsTrue(basicClass.Double < (double)0.12345 || basicClass.Double >= (double)0.5678, $"Value generated is {basicClass.Double}");

@@ -27,7 +27,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.SetByteRange<BasicClass>("Byte", Range.LessThan, maxValue: (byte)100);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
                 Assert.IsTrue(basicClass.Byte <= (byte)100, $"Value generated is {basicClass.Byte}");
@@ -40,7 +40,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.SetByteRange<BasicClass>("Byte", Range.GreaterThan, (byte)100);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
                 Assert.IsTrue(basicClass.Byte >= (byte)100, $"Value generated is {basicClass.Byte}");
@@ -53,7 +53,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.SetByteRange<BasicClass>("Byte", Range.Between, (byte)5, (byte)50);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
                 Assert.IsTrue(basicClass.Byte >= (byte)5, $"Value generated is {basicClass.Byte}");
@@ -67,7 +67,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.SetByteRange<BasicClass>("Byte", Range.Outside, (byte)5, (byte)50);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
                 Assert.IsTrue(basicClass.Byte < (byte)5 || basicClass.Byte >= (byte)50, $"Value generated is {basicClass.Byte}");

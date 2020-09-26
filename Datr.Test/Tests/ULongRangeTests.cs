@@ -27,7 +27,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.SetULongRange<BasicClass>("ULong", Range.LessThan, maxValue: (ulong)100000000000);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
                 Assert.IsTrue(basicClass.ULong <= (ulong)100000000000, $"Value generated is {basicClass.ULong}");
@@ -40,7 +40,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.SetULongRange<BasicClass>("ULong", Range.GreaterThan, (ulong)100000000000);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
                 Assert.IsTrue(basicClass.ULong >= (ulong)100000000000, $"Value generated is {basicClass.ULong}");
@@ -53,7 +53,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.SetULongRange<BasicClass>("ULong", Range.Between, (ulong)100000000000, (ulong)9000000000000);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
                 Assert.IsTrue(basicClass.ULong >= (ulong)100000000000, $"Value generated is {basicClass.ULong}");
@@ -67,7 +67,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.SetULongRange<BasicClass>("ULong", Range.Outside, (ulong)100000000000, (ulong)9000000000000);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
                 Assert.IsTrue(basicClass.ULong < (ulong)100000000000 || basicClass.ULong >= (ulong)9000000000000, $"Value generated is {basicClass.ULong}");
