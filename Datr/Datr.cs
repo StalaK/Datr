@@ -459,6 +459,56 @@ namespace Datr
             FixedRanges.Add(floatRange);
         }
 
+        public void SetDoubleRange<T>(string propertyName, Range range, double? minValue = null, double? maxValue = null)
+        {
+            if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetDoubleRange: minValue and maxValue parameters must be set when using a range of Between or Outside.");
+            }
+
+            if (maxValue <= minValue && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetDoubleRange: maxValue cannot be less than or equal to minValue when using a range of Between or Outside");
+            }
+
+            if (minValue == null && range == Range.GreaterThan)
+            {
+                throw new ArgumentException("SetDoubleRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (maxValue == null && range == Range.LessThan)
+            {
+                throw new ArgumentException("SetDoubleRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (minValue == float.MaxValue)
+            {
+                throw new ArgumentException("SetDoubleRange: minValue cannot be equal to uint.MaxValue");
+            }
+
+            if (maxValue == float.MinValue)
+            {
+                throw new ArgumentException("SetDoubleRange: maxValue cannot be equal to uint.MinValue");
+            }
+
+            if (!HasProperty<T, float>(propertyName))
+            {
+                throw new ArgumentException($"SetDoubleRange: The type {typeof(T).Name} does not contain the property {propertyName}");
+            }
+
+            var floatRange = new FixedRange
+            {
+                DataType = typeof(float),
+                ClassType = typeof(T),
+                PropertyName = propertyName,
+                Range = range,
+                MinValue = minValue,
+                MaxValue = maxValue
+            };
+
+            FixedRanges.Add(floatRange);
+        }
+
         public void SetLongRange<T>(string propertyName, Range range, long? minValue = null, long? maxValue = null)
         {
             if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
