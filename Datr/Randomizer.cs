@@ -67,7 +67,13 @@ namespace Datr
 
         internal DateTime DateTime()
         {
-            var ticks = Math.Abs(Long());
+            long ticks;
+
+            do
+            {
+                ticks = Math.Abs(Long());
+            } while (ticks <= 0 || ticks > System.DateTime.MaxValue.Ticks);
+
             return new DateTime(ticks);
         }
 
@@ -396,6 +402,22 @@ namespace Datr
             int charCount = FixedRangeInt(range);
 
             return new string(Enumerable.Repeat(chars, charCount).Select(s => s[_random.Next(s.Length)]).ToArray());
+        }
+
+        internal DateTime FixedRangeDateTime(FixedRange range)
+        {
+            var minRangeTicks = ((DateTime)range.MinValue).Ticks;
+            var maxRangeTicks = ((DateTime)range.MaxValue).Ticks;
+
+            var longRange = new FixedRange
+            {
+                Range = range.Range,
+                MinValue = minRangeTicks,
+                MaxValue = maxRangeTicks
+            };
+
+            var newDateTicks = FixedRangeLong(longRange);
+            return new DateTime(newDateTicks);
         }
 
         #endregion
