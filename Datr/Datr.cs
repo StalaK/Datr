@@ -481,24 +481,24 @@ namespace Datr
                 throw new ArgumentException("SetDoubleRange: minValue must not be null when using the GreaterThan range");
             }
 
-            if (minValue == float.MaxValue)
+            if (minValue == double.MaxValue)
             {
                 throw new ArgumentException("SetDoubleRange: minValue cannot be equal to uint.MaxValue");
             }
 
-            if (maxValue == float.MinValue)
+            if (maxValue == double.MinValue)
             {
                 throw new ArgumentException("SetDoubleRange: maxValue cannot be equal to uint.MinValue");
             }
 
-            if (!HasProperty<T, float>(propertyName))
+            if (!HasProperty<T, double>(propertyName))
             {
                 throw new ArgumentException($"SetDoubleRange: The type {typeof(T).Name} does not contain the property {propertyName}");
             }
 
-            var floatRange = new FixedRange
+            var doubleRange = new FixedRange
             {
-                DataType = typeof(float),
+                DataType = typeof(double),
                 ClassType = typeof(T),
                 PropertyName = propertyName,
                 Range = range,
@@ -506,7 +506,7 @@ namespace Datr
                 MaxValue = maxValue
             };
 
-            FixedRanges.Add(floatRange);
+            FixedRanges.Add(doubleRange);
         }
 
         public void SetLongRange<T>(string propertyName, Range range, long? minValue = null, long? maxValue = null)

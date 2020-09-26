@@ -25,12 +25,12 @@ namespace Datr.Test.Tests
         public void LongRangeLessThan()
         {
             var datr = new Datr();
-            datr.SetLongRange<BasicClass>("Long", Range.LessThan, maxValue: (long)100);
+            datr.SetLongRange<BasicClass>("Long", Range.LessThan, maxValue: (long)100000000000);
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
-                Assert.IsTrue(basicClass.Long <= (long)100, $"Value generated is {basicClass.Long}");
+                Assert.IsTrue(basicClass.Long <= (long)100000000000, $"Value generated is {basicClass.Long}");
             }
         }
 
@@ -38,12 +38,12 @@ namespace Datr.Test.Tests
         public void LongRangeGreaterThan()
         {
             var datr = new Datr();
-            datr.SetLongRange<BasicClass>("Long", Range.GreaterThan, (long)100);
+            datr.SetLongRange<BasicClass>("Long", Range.GreaterThan, (long)100000000000);
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
-                Assert.IsTrue(basicClass.Long >= (long)100, $"Value generated is {basicClass.Long}");
+                Assert.IsTrue(basicClass.Long >= (long)100000000000, $"Value generated is {basicClass.Long}");
             }
         }
 
@@ -51,13 +51,13 @@ namespace Datr.Test.Tests
         public void LongRangeBetween()
         {
             var datr = new Datr();
-            datr.SetLongRange<BasicClass>("Long", Range.Between, (long)5, (long)50);
+            datr.SetLongRange<BasicClass>("Long", Range.Between, (long)-100000000000, (long)900000000000);
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
-                Assert.IsTrue(basicClass.Long >= (long)5, $"Value generated is {basicClass.Long}");
-                Assert.IsTrue(basicClass.Long <= (long)50, $"Value generated is {basicClass.Long}");
+                Assert.IsTrue(basicClass.Long >= (long)-100000000000, $"Value generated is {basicClass.Long}");
+                Assert.IsTrue(basicClass.Long <= (long)900000000000, $"Value generated is {basicClass.Long}");
             }
         }
 
@@ -65,12 +65,12 @@ namespace Datr.Test.Tests
         public void LongRangeOutside()
         {
             var datr = new Datr();
-            datr.SetLongRange<BasicClass>("Long", Range.Outside, (long)5, (long)50);
+            datr.SetLongRange<BasicClass>("Long", Range.Outside, (long)-100000000000, (long)900000000000);
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
-                Assert.IsTrue(basicClass.Long < (long)5 || basicClass.Long >= (long)50, $"Value generated is {basicClass.Long}");
+                Assert.IsTrue(basicClass.Long < (long)-100000000000 || basicClass.Long >= (long)900000000000, $"Value generated is {basicClass.Long}");
             }
         }
 
@@ -78,70 +78,70 @@ namespace Datr.Test.Tests
         public void LongRangeMinValueNullBetweenRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.Between, maxValue: (long)100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.Between, maxValue: (long)100000000000));
         }
 
         [TestMethod]
         public void LongRangeMinValueNullOutsideRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.Outside, maxValue: (long)100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.Outside, maxValue: (long)100000000000));
         }
 
         [TestMethod]
         public void LongRangeMaxValueNullBetweenRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.Between, minValue: (long)100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.Between, minValue: (long)100000000000));
         }
 
         [TestMethod]
         public void LongRangeMaxValueNullOutsideRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.Outside, minValue: (long)100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.Outside, minValue: (long)100000000000));
         }
 
         [TestMethod]
         public void LongRangeMinValueNullGreaterThanRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.GreaterThan, maxValue: (long)100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.GreaterThan, maxValue: (long)100000000000));
         }
 
         [TestMethod]
         public void LongRangeMaxValueNullLessThanRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.LessThan, minValue: (long)100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.LessThan, minValue: (long)100000000000));
         }
 
         [TestMethod]
         public void LongRangeMaxValueEqualMinValueBetweenRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.Between, minValue: (long)100, maxValue: (long)100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.Between, minValue: (long)100000000000, maxValue: (long)100000000000));
         }
 
         [TestMethod]
         public void LongRangeMaxValueEqualMinValueOutsideRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.Between, minValue: (long)100, maxValue: (long)100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.Between, minValue: (long)100000000000, maxValue: (long)100000000000));
         }
 
         [TestMethod]
         public void LongRangeMaxValueLessThanMinValueBetweenRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.Between, minValue: (long)100, maxValue: 90));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.Between, minValue: (long)100000000000, maxValue: 10000000000));
         }
 
         [TestMethod]
         public void LongRangeMaxValueLessThanMinValueOutsideRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.Between, minValue: (long)100, maxValue: (long)90));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetLongRange<BasicClass>("Long", Range.Between, minValue: (long)100000000000, maxValue: (long)10000000000));
         }
 
         [TestMethod]

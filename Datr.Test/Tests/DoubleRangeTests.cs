@@ -25,12 +25,12 @@ namespace Datr.Test.Tests
         public void DoubleRangeLessThan()
         {
             var datr = new Datr();
-            datr.SetDoubleRange<BasicClass>("Double", Range.LessThan, maxValue: (double)100);
+            datr.SetDoubleRange<BasicClass>("Double", Range.LessThan, maxValue: (double)0.3);
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
-                Assert.IsTrue(basicClass.Double <= (double)100, $"Value generated is {basicClass.Double}");
+                Assert.IsTrue(basicClass.Double <= (double)0.3, $"Value generated is {basicClass.Double}");
             }
         }
 
@@ -38,12 +38,12 @@ namespace Datr.Test.Tests
         public void DoubleRangeGreaterThan()
         {
             var datr = new Datr();
-            datr.SetDoubleRange<BasicClass>("Double", Range.GreaterThan, (double)100);
+            datr.SetDoubleRange<BasicClass>("Double", Range.GreaterThan, (double)0.3);
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
-                Assert.IsTrue(basicClass.Double >= (double)100, $"Value generated is {basicClass.Double}");
+                Assert.IsTrue(basicClass.Double >= (double)0.3, $"Value generated is {basicClass.Double}");
             }
         }
 
@@ -51,13 +51,13 @@ namespace Datr.Test.Tests
         public void DoubleRangeBetween()
         {
             var datr = new Datr();
-            datr.SetDoubleRange<BasicClass>("Double", Range.Between, (double)5, (double)50);
+            datr.SetDoubleRange<BasicClass>("Double", Range.Between, (double)0.12345, (double)0.5678);
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
-                Assert.IsTrue(basicClass.Double >= (double)5, $"Value generated is {basicClass.Double}");
-                Assert.IsTrue(basicClass.Double <= (double)50, $"Value generated is {basicClass.Double}");
+                Assert.IsTrue(basicClass.Double >= (double)0.12345, $"Value generated is {basicClass.Double}");
+                Assert.IsTrue(basicClass.Double <= (double)0.5678, $"Value generated is {basicClass.Double}");
             }
         }
 
@@ -65,12 +65,12 @@ namespace Datr.Test.Tests
         public void DoubleRangeOutside()
         {
             var datr = new Datr();
-            datr.SetDoubleRange<BasicClass>("Double", Range.Outside, (double)5, (double)50);
+            datr.SetDoubleRange<BasicClass>("Double", Range.Outside, (double)0.12345, (double)0.5678);
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 var basicClass = datr.Create<BasicClass>();
-                Assert.IsTrue(basicClass.Double < (double)5 || basicClass.Double >= (double)50, $"Value generated is {basicClass.Double}");
+                Assert.IsTrue(basicClass.Double < (double)0.12345 || basicClass.Double >= (double)0.5678, $"Value generated is {basicClass.Double}");
             }
         }
 
@@ -78,70 +78,70 @@ namespace Datr.Test.Tests
         public void DoubleRangeMinValueNullBetweenRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.Between, maxValue: (double)100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.Between, maxValue: (double)0.5));
         }
 
         [TestMethod]
         public void DoubleRangeMinValueNullOutsideRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.Outside, maxValue: (double)100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.Outside, maxValue: (double)0.5));
         }
 
         [TestMethod]
         public void DoubleRangeMaxValueNullBetweenRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.Between, minValue: (double)100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.Between, minValue: (double)0.5));
         }
 
         [TestMethod]
         public void DoubleRangeMaxValueNullOutsideRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.Outside, minValue: (double)100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.Outside, minValue: (double)0.5));
         }
 
         [TestMethod]
         public void DoubleRangeMinValueNullGreaterThanRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.GreaterThan, maxValue: (double)100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.GreaterThan, maxValue: (double)0.5));
         }
 
         [TestMethod]
         public void DoubleRangeMaxValueNullLessThanRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.LessThan, minValue: (double)100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.LessThan, minValue: (double)0.5));
         }
 
         [TestMethod]
         public void DoubleRangeMaxValueEqualMinValueBetweenRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.Between, minValue: (double)100, maxValue: (double)100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.Between, minValue: (double)0.1, maxValue: (double)0.1));
         }
 
         [TestMethod]
         public void DoubleRangeMaxValueEqualMinValueOutsideRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.Between, minValue: (double)100, maxValue: (double)100));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.Between, minValue: (double)0.1, maxValue: (double)0.1));
         }
 
         [TestMethod]
         public void DoubleRangeMaxValueLessThanMinValueBetweenRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.Between, minValue: (double)100, maxValue: 90));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.Between, minValue: (double)0.9, maxValue: 0.8));
         }
 
         [TestMethod]
         public void DoubleRangeMaxValueLessThanMinValueOutsideRange()
         {
             var datr = new Datr();
-            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.Between, minValue: (double)100, maxValue: (double)90));
+            Assert.ThrowsException<ArgumentException>(() => datr.SetDoubleRange<BasicClass>("Double", Range.Between, minValue: (double)0.9, maxValue: (double)0.8));
         }
 
         [TestMethod]
