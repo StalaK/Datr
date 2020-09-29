@@ -10,7 +10,7 @@ namespace Datr
         public List<string> ExcludedPropertyNames { get; set; }
         public List<TypeProperty> ExcludedTypeProperties { get; set; }
         public List<FixedValue> FixedValues { get; set; }
-        public List<FixedRange> FixedRanges { get; set; }
+        public List<FixedRange> FixedRanges { get; private set; }
         private Randomizer _randomizer { get; set; }
 
         public Datr()
@@ -59,191 +59,32 @@ namespace Datr
             return (T)instance;
         }
 
-        public void SetIntRange<T>(string propertyName, Range range, int? minValue = null, int? maxValue = null)
+        public void SetIntRange<T>(string propertyName, Range range, int? minValue = null, int? maxValue = null) => SetRange<int, T>(propertyName, range, minValue, maxValue);
+        public void SetUIntRange<T>(string propertyName, Range range, uint? minValue = null, uint? maxValue = null) => SetRange<uint, T>(propertyName, range, minValue, maxValue);
+        public void SetDecimalRange<T>(string propertyName, Range range, decimal? minValue = null, decimal? maxValue = null) => SetRange<decimal, T>(propertyName, range, minValue, maxValue);
+        public void SetSByteRange<T>(string propertyName, Range range, sbyte? minValue = null, sbyte? maxValue = null) => SetRange<sbyte, T>(propertyName, range, minValue, maxValue);
+        public void SetByteRange<T>(string propertyName, Range range, byte? minValue = null, byte? maxValue = null) => SetRange<byte, T>(propertyName, range, minValue, maxValue);
+        public void SetShortRange<T>(string propertyName, Range range, short? minValue = null, short? maxValue = null) => SetRange<short, T>(propertyName, range, minValue, maxValue);
+        public void SetUShortRange<T>(string propertyName, Range range, ushort? minValue = null, ushort? maxValue = null) => SetRange<ushort, T>(propertyName, range, minValue, maxValue);
+        public void SetFloatRange<T>(string propertyName, Range range, float? minValue = null, float? maxValue = null) => SetRange<float, T>(propertyName, range, minValue, maxValue);
+        public void SetDoubleRange<T>(string propertyName, Range range, double? minValue = null, double? maxValue = null) => SetRange<double, T>(propertyName, range, minValue, maxValue);
+        public void SetLongRange<T>(string propertyName, Range range, long? minValue = null, long? maxValue = null) => SetRange<long, T>(propertyName, range, minValue, maxValue);
+        public void SetULongRange<T>(string propertyName, Range range, ulong? minValue = null, ulong? maxValue = null) => SetRange<ulong, T>(propertyName, range, minValue, maxValue);
+        private void SetRange<PropertyType, ContainingClass>(string propertyName, Range range, dynamic minValue, dynamic maxValue)
         {
-            ValidateRange<int, T>(propertyName, range, minValue, maxValue);
+            ValidateRange<PropertyType, ContainingClass>(propertyName, range, minValue, maxValue);
 
-            var intRange = new FixedRange
+            var fixedRange = new FixedRange
             {
-                DataType = typeof(int),
-                ClassType = typeof(T),
+                DataType = typeof(PropertyType),
+                ClassType = typeof(ContainingClass),
                 PropertyName = propertyName,
                 Range = range,
                 MinValue = minValue,
                 MaxValue = maxValue
             };
 
-            FixedRanges.Add(intRange);
-        }
-
-        public void SetUIntRange<T>(string propertyName, Range range, uint? minValue = null, uint? maxValue = null)
-        {
-            ValidateRange<uint, T>(propertyName, range, minValue, maxValue);
-
-            var uintRange = new FixedRange
-            {
-                DataType = typeof(uint),
-                ClassType = typeof(T),
-                PropertyName = propertyName,
-                Range = range,
-                MinValue = minValue,
-                MaxValue = maxValue
-            };
-
-            FixedRanges.Add(uintRange);
-        }
-
-        public void SetDecimalRange<T>(string propertyName, Range range, decimal? minValue = null, decimal? maxValue = null)
-        {
-            ValidateRange<decimal, T>(propertyName, range, minValue, maxValue);
-
-            var decimalRange = new FixedRange
-            {
-                DataType = typeof(decimal),
-                ClassType = typeof(T),
-                PropertyName = propertyName,
-                Range = range,
-                MinValue = minValue,
-                MaxValue = maxValue
-            };
-
-            FixedRanges.Add(decimalRange);
-        }
-
-        public void SetSByteRange<T>(string propertyName, Range range, sbyte? minValue = null, sbyte? maxValue = null)
-        {
-            ValidateRange<sbyte, T>(propertyName, range, minValue, maxValue);
-
-            var decimalRange = new FixedRange
-            {
-                DataType = typeof(sbyte),
-                ClassType = typeof(T),
-                PropertyName = propertyName,
-                Range = range,
-                MinValue = minValue,
-                MaxValue = maxValue
-            };
-
-            FixedRanges.Add(decimalRange);
-        }
-
-        public void SetByteRange<T>(string propertyName, Range range, byte? minValue = null, byte? maxValue = null)
-        {
-            ValidateRange<byte, T>(propertyName, range, minValue, maxValue);
-
-            var decimalRange = new FixedRange
-            {
-                DataType = typeof(byte),
-                ClassType = typeof(T),
-                PropertyName = propertyName,
-                Range = range,
-                MinValue = minValue,
-                MaxValue = maxValue
-            };
-
-            FixedRanges.Add(decimalRange);
-        }
-
-        public void SetShortRange<T>(string propertyName, Range range, short? minValue = null, short? maxValue = null)
-        {
-            ValidateRange<short, T>(propertyName, range, minValue, maxValue);
-
-            var shortRange = new FixedRange
-            {
-                DataType = typeof(short),
-                ClassType = typeof(T),
-                PropertyName = propertyName,
-                Range = range,
-                MinValue = minValue,
-                MaxValue = maxValue
-            };
-
-            FixedRanges.Add(shortRange);
-        }
-
-        public void SetUShortRange<T>(string propertyName, Range range, ushort? minValue = null, ushort? maxValue = null)
-        {
-            ValidateRange<ushort, T>(propertyName, range, minValue, maxValue);
-
-            var ushortRange = new FixedRange
-            {
-                DataType = typeof(ushort),
-                ClassType = typeof(T),
-                PropertyName = propertyName,
-                Range = range,
-                MinValue = minValue,
-                MaxValue = maxValue
-            };
-
-            FixedRanges.Add(ushortRange);
-        }
-
-        public void SetFloatRange<T>(string propertyName, Range range, float? minValue = null, float? maxValue = null)
-        {
-            ValidateRange<float, T>(propertyName, range, minValue, maxValue);
-
-            var floatRange = new FixedRange
-            {
-                DataType = typeof(float),
-                ClassType = typeof(T),
-                PropertyName = propertyName,
-                Range = range,
-                MinValue = minValue,
-                MaxValue = maxValue
-            };
-
-            FixedRanges.Add(floatRange);
-        }
-
-        public void SetDoubleRange<T>(string propertyName, Range range, double? minValue = null, double? maxValue = null)
-        {
-            ValidateRange<double, T>(propertyName, range, minValue, maxValue);
-
-            var doubleRange = new FixedRange
-            {
-                DataType = typeof(double),
-                ClassType = typeof(T),
-                PropertyName = propertyName,
-                Range = range,
-                MinValue = minValue,
-                MaxValue = maxValue
-            };
-
-            FixedRanges.Add(doubleRange);
-        }
-
-        public void SetLongRange<T>(string propertyName, Range range, long? minValue = null, long? maxValue = null)
-        {
-            ValidateRange<long, T>(propertyName, range, minValue, maxValue);
-
-            var longRange = new FixedRange
-            {
-                DataType = typeof(long),
-                ClassType = typeof(T),
-                PropertyName = propertyName,
-                Range = range,
-                MinValue = minValue,
-                MaxValue = maxValue
-            };
-
-            FixedRanges.Add(longRange);
-        }
-
-        public void SetULongRange<T>(string propertyName, Range range, ulong? minValue = null, ulong? maxValue = null)
-        {
-            ValidateRange<ulong, T>(propertyName, range, minValue, maxValue);
-
-            var ulongRange = new FixedRange
-            {
-                DataType = typeof(ulong),
-                ClassType = typeof(T),
-                PropertyName = propertyName,
-                Range = range,
-                MinValue = minValue,
-                MaxValue = maxValue
-            };
-
-            FixedRanges.Add(ulongRange);
+            FixedRanges.Add(fixedRange);
         }
 
         public void SetStringRange<T>(string propertyName, Range range, int? minValue = null, int? maxValue = null)
