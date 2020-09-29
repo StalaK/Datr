@@ -680,9 +680,13 @@ namespace Datr
             var genericMethod = method.MakeGenericMethod(instance.GetType());
             var range = (FixedRange)genericMethod.Invoke(this, new[] { property });
 
-            if (property.PropertyType.IsPrimitive)
+            var underlyingNullableType = Nullable.GetUnderlyingType(property.PropertyType);
+
+            if (property.PropertyType.IsPrimitive || underlyingNullableType?.IsPrimitive == true)
             {
-                var propertyInstance = Activator.CreateInstance(property.PropertyType);
+                var propertyInstance = 
+                    underlyingNullableType == null ? Activator.CreateInstance(property.PropertyType) : Activator.CreateInstance(underlyingNullableType);
+
                 switch (propertyInstance)
                 {
                     case bool t:
@@ -746,7 +750,7 @@ namespace Datr
             }
             else
             {
-                if (property.PropertyType == typeof(decimal))
+                if (property.PropertyType == typeof(decimal) || underlyingNullableType == typeof(decimal))
                 {
                     var decimalValue = range == null ? _randomizer.Decimal() : _randomizer.FixedRangeDecimal(range);
                     property.SetValue(instance, decimalValue);
