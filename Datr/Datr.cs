@@ -59,18 +59,124 @@ namespace Datr
             return (T)instance;
         }
 
+        /// <summary>
+        /// Sets a fixed range of values for the given class and int property
+        /// </summary>
+        /// <typeparam name="T">The class containing the property</typeparam>
+        /// <param name="propertyName">The name of the property (case insensitive)</param>
+        /// <param name="range">The range for the property to be generated in. Greater than, Less Than, Between or Outside</param>
+        /// <param name="minValue">The minimum value of the property</param>
+        /// <param name="maxValue">The maximum value of the property</param>
         public void SetIntRange<T>(string propertyName, Range range, int? minValue = null, int? maxValue = null) => SetRange<int, T>(propertyName, range, minValue, maxValue);
+
+        /// <summary>
+        /// Sets a fixed range of values for the given class and uint property
+        /// </summary>
+        /// <typeparam name="T">The class containing the property</typeparam>
+        /// <param name="propertyName">The name of the property (case insensitive)</param>
+        /// <param name="range">The range for the property to be generated in. Greater than, Less Than, Between or Outside</param>
+        /// <param name="minValue">The minimum value of the property</param>
+        /// <param name="maxValue">The maximum value of the property</param>
         public void SetUIntRange<T>(string propertyName, Range range, uint? minValue = null, uint? maxValue = null) => SetRange<uint, T>(propertyName, range, minValue, maxValue);
+
+        /// <summary>
+        /// Sets a fixed range of values for the given class and decimal property
+        /// </summary>
+        /// <typeparam name="T">The class containing the property</typeparam>
+        /// <param name="propertyName">The name of the property (case insensitive)</param>
+        /// <param name="range">The range for the property to be generated in. Greater than, Less Than, Between or Outside</param>
+        /// <param name="minValue">The minimum value of the property</param>
+        /// <param name="maxValue">The maximum value of the property</param>
         public void SetDecimalRange<T>(string propertyName, Range range, decimal? minValue = null, decimal? maxValue = null) => SetRange<decimal, T>(propertyName, range, minValue, maxValue);
+
+        /// <summary>
+        /// Sets a fixed range of values for the given class and sbyte property
+        /// </summary>
+        /// <typeparam name="T">The class containing the property</typeparam>
+        /// <param name="propertyName">The name of the property (case insensitive)</param>
+        /// <param name="range">The range for the property to be generated in. Greater than, Less Than, Between or Outside</param>
+        /// <param name="minValue">The minimum value of the property</param>
+        /// <param name="maxValue">The maximum value of the property</param>
         public void SetSByteRange<T>(string propertyName, Range range, sbyte? minValue = null, sbyte? maxValue = null) => SetRange<sbyte, T>(propertyName, range, minValue, maxValue);
+
+        /// <summary>
+        /// Sets a fixed range of values for the given class and byte property
+        /// </summary>
+        /// <typeparam name="T">The class containing the property</typeparam>
+        /// <param name="propertyName">The name of the property (case insensitive)</param>
+        /// <param name="range">The range for the property to be generated in. Greater than, Less Than, Between or Outside</param>
+        /// <param name="minValue">The minimum value of the property</param>
+        /// <param name="maxValue">The maximum value of the property</param>
         public void SetByteRange<T>(string propertyName, Range range, byte? minValue = null, byte? maxValue = null) => SetRange<byte, T>(propertyName, range, minValue, maxValue);
+
+        /// <summary>
+        /// Sets a fixed range of values for the given class and short property
+        /// </summary>
+        /// <typeparam name="T">The class containing the property</typeparam>
+        /// <param name="propertyName">The name of the property (case insensitive)</param>
+        /// <param name="range">The range for the property to be generated in. Greater than, Less Than, Between or Outside</param>
+        /// <param name="minValue">The minimum value of the property</param>
+        /// <param name="maxValue">The maximum value of the property</param>
         public void SetShortRange<T>(string propertyName, Range range, short? minValue = null, short? maxValue = null) => SetRange<short, T>(propertyName, range, minValue, maxValue);
+
+        /// <summary>
+        /// Sets a fixed range of values for the given class and ushort property
+        /// </summary>
+        /// <typeparam name="T">The class containing the property</typeparam>
+        /// <param name="propertyName">The name of the property (case insensitive)</param>
+        /// <param name="range">The range for the property to be generated in. Greater than, Less Than, Between or Outside</param>
+        /// <param name="minValue">The minimum value of the property</param>
+        /// <param name="maxValue">The maximum value of the property</param>
         public void SetUShortRange<T>(string propertyName, Range range, ushort? minValue = null, ushort? maxValue = null) => SetRange<ushort, T>(propertyName, range, minValue, maxValue);
+
+        /// <summary>
+        /// Sets a fixed range of values for the given class and float property
+        /// </summary>
+        /// <typeparam name="T">The class containing the property</typeparam>
+        /// <param name="propertyName">The name of the property (case insensitive)</param>
+        /// <param name="range">The range for the property to be generated in. Greater than, Less Than, Between or Outside</param>
+        /// <param name="minValue">The minimum value of the property</param>
+        /// <param name="maxValue">The maximum value of the property</param>
         public void SetFloatRange<T>(string propertyName, Range range, float? minValue = null, float? maxValue = null) => SetRange<float, T>(propertyName, range, minValue, maxValue);
+
+        /// <summary>
+        /// Sets a fixed range of values for the given class and double property
+        /// </summary>
+        /// <typeparam name="T">The class containing the property</typeparam>
+        /// <param name="propertyName">The name of the property (case insensitive)</param>
+        /// <param name="range">The range for the property to be generated in. Greater than, Less Than, Between or Outside</param>
+        /// <param name="minValue">The minimum value of the property</param>
+        /// <param name="maxValue">The maximum value of the property</param>
         public void SetDoubleRange<T>(string propertyName, Range range, double? minValue = null, double? maxValue = null) => SetRange<double, T>(propertyName, range, minValue, maxValue);
+
+        /// <summary>
+        /// Sets a fixed range of values for the given class and long property
+        /// </summary>
+        /// <typeparam name="T">The class containing the property</typeparam>
+        /// <param name="propertyName">The name of the property (case insensitive)</param>
+        /// <param name="range">The range for the property to be generated in. Greater than, Less Than, Between or Outside</param>
+        /// <param name="minValue">The minimum value of the property</param>
+        /// <param name="maxValue">The maximum value of the property</param>
         public void SetLongRange<T>(string propertyName, Range range, long? minValue = null, long? maxValue = null) => SetRange<long, T>(propertyName, range, minValue, maxValue);
+
+        /// <summary>
+        /// Sets a fixed range of values for the given class and ulong property
+        /// </summary>
+        /// <typeparam name="T">The class containing the property</typeparam>
+        /// <param name="propertyName">The name of the property (case insensitive)</param>
+        /// <param name="range">The range for the property to be generated in. Greater than, Less Than, Between or Outside</param>
+        /// <param name="minValue">The minimum value of the property</param>
+        /// <param name="maxValue">The maximum value of the property</param>
         public void SetULongRange<T>(string propertyName, Range range, ulong? minValue = null, ulong? maxValue = null) => SetRange<ulong, T>(propertyName, range, minValue, maxValue);
 
+        /// <summary>
+        /// Sets a fixed range of lengths for the given class and string property
+        /// </summary>
+        /// <typeparam name="T">The class containing the property</typeparam>
+        /// <param name="propertyName">The name of the property (case insensitive)</param>
+        /// <param name="range">The range for the property to be generated in. Greater than, Less Than, Between or Outside</param>
+        /// <param name="minValue">The minimum length of the string</param>
+        /// <param name="maxValue">The maximum length of the string</param>
         public void SetStringRange<T>(string propertyName, Range range, int? minValue = null, int? maxValue = null)
         {
             if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
@@ -121,6 +227,14 @@ namespace Datr
             FixedRanges.Add(stringRange);
         }
 
+        /// <summary>
+        /// Sets a fixed range of values for the given class and DateTime property
+        /// </summary>
+        /// <typeparam name="T">The class containing the property</typeparam>
+        /// <param name="propertyName">The name of the property (case insensitive)</param>
+        /// <param name="range">The range for the property to be generated in. Greater than, Less Than, Between or Outside</param>
+        /// <param name="minValue">The minimum value of the property</param>
+        /// <param name="maxValue">The maximum value of the property</param>
         public void SetDateTimeRange<T>(string propertyName, Range range, DateTime? minValue = null, DateTime? maxValue = null)
         {
             if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
@@ -292,9 +406,6 @@ namespace Datr
             }
         }
 
-        public FixedRange GetFixedRange<T>(PropertyInfo property) => 
-            FixedRanges.FirstOrDefault(r => (Type)r.ClassType == typeof(T) && r.PropertyName.ToLower() == property.Name.ToLower());
-
         private bool HasProperty<T, U>(string propertyName) =>
             typeof(T).GetProperties().Any(p => p.Name.ToLower() == propertyName.ToLower() && p.PropertyType == typeof(U));
 
@@ -314,7 +425,6 @@ namespace Datr
 
             FixedRanges.Add(fixedRange);
         }
-
         private void ValidateRange<PropertyType, ContainingClass>(string propertyName, Range range, dynamic minValue, dynamic maxValue)
         {
             var propertyTypeName = typeof(PropertyType).Name;
