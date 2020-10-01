@@ -70,22 +70,6 @@ namespace Datr
         public void SetDoubleRange<T>(string propertyName, Range range, double? minValue = null, double? maxValue = null) => SetRange<double, T>(propertyName, range, minValue, maxValue);
         public void SetLongRange<T>(string propertyName, Range range, long? minValue = null, long? maxValue = null) => SetRange<long, T>(propertyName, range, minValue, maxValue);
         public void SetULongRange<T>(string propertyName, Range range, ulong? minValue = null, ulong? maxValue = null) => SetRange<ulong, T>(propertyName, range, minValue, maxValue);
-        private void SetRange<PropertyType, ContainingClass>(string propertyName, Range range, dynamic minValue, dynamic maxValue)
-        {
-            ValidateRange<PropertyType, ContainingClass>(propertyName, range, minValue, maxValue);
-
-            var fixedRange = new FixedRange
-            {
-                DataType = typeof(PropertyType),
-                ClassType = typeof(ContainingClass),
-                PropertyName = propertyName,
-                Range = range,
-                MinValue = minValue,
-                MaxValue = maxValue
-            };
-
-            FixedRanges.Add(fixedRange);
-        }
 
         public void SetStringRange<T>(string propertyName, Range range, int? minValue = null, int? maxValue = null)
         {
@@ -127,6 +111,56 @@ namespace Datr
             var stringRange = new FixedRange
             {
                 DataType = typeof(string),
+                ClassType = typeof(T),
+                PropertyName = propertyName,
+                Range = range,
+                MinValue = minValue,
+                MaxValue = maxValue
+            };
+
+            FixedRanges.Add(stringRange);
+        }
+
+        public void SetDateTimeRange<T>(string propertyName, Range range, DateTime? minValue = null, DateTime? maxValue = null)
+        {
+            if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetDateTimeRange: minValue and maxValue parameters must be set when using a range of Between or Outside.");
+            }
+
+            if (maxValue <= minValue && (range == Range.Between || range == Range.Outside))
+            {
+                throw new ArgumentException("SetDateTimeRange: maxValue cannot be less than or equal to minValue when using a range of Between or Outside");
+            }
+
+            if (minValue == null && range == Range.GreaterThan)
+            {
+                throw new ArgumentException("SetDateTimeRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (maxValue == null && range == Range.LessThan)
+            {
+                throw new ArgumentException("SetDateTimeRange: minValue must not be null when using the GreaterThan range");
+            }
+
+            if (minValue == DateTime.MaxValue)
+            {
+                throw new ArgumentException("SetDateTimeRange: minValue cannot be equal to DateTime.MaxValue");
+            }
+
+            if (maxValue == DateTime.MinValue)
+            {
+                throw new ArgumentException("SetDateTimeRange: maxValue cannot be equal to DateTime.MinValue");
+            }
+
+            if (!HasProperty<T, DateTime>(propertyName))
+            {
+                throw new ArgumentException($"SetDateTimeRange: The type {typeof(T).Name} does not contain the property {propertyName}");
+            }
+
+            var stringRange = new FixedRange
+            {
+                DataType = typeof(DateTime),
                 ClassType = typeof(T),
                 PropertyName = propertyName,
                 Range = range,
@@ -236,7 +270,7 @@ namespace Datr
 
                 if (property.PropertyType == typeof(DateTime))
                 {
-                    var dateTimeValue = _randomizer.DateTime();
+                    var dateTimeValue = range == null ? _randomizer.DateTime() : _randomizer.FixedRangeDateTime(range);
                     property.SetValue(instance, dateTimeValue);
                 }
             }
@@ -264,26 +298,45 @@ namespace Datr
         private bool HasProperty<T, U>(string propertyName) =>
             typeof(T).GetProperties().Any(p => p.Name.ToLower() == propertyName.ToLower() && p.PropertyType == typeof(U));
 
+        private void SetRange<PropertyType, ContainingClass>(string propertyName, Range range, dynamic minValue, dynamic maxValue)
+        {
+            ValidateRange<PropertyType, ContainingClass>(propertyName, range, minValue, maxValue);
+
+            var fixedRange = new FixedRange
+            {
+                DataType = typeof(PropertyType),
+                ClassType = typeof(ContainingClass),
+                PropertyName = propertyName,
+                Range = range,
+                MinValue = minValue,
+                MaxValue = maxValue
+            };
+
+            FixedRanges.Add(fixedRange);
+        }
+
         private void ValidateRange<PropertyType, ContainingClass>(string propertyName, Range range, dynamic minValue, dynamic maxValue)
         {
+            var propertyTypeName = typeof(PropertyType).Name;
+
             if ((minValue == null || maxValue == null) && (range == Range.Between || range == Range.Outside))
             {
-                throw new ArgumentException($"Set{typeof(PropertyType).Name}Range: minValue and maxValue parameters must be set when using a range of Between or Outside.");
+                throw new ArgumentException($"Set{propertyTypeName}Range: minValue and maxValue parameters must be set when using a range of Between or Outside.");
             }
 
             if (maxValue <= minValue && (range == Range.Between || range == Range.Outside))
             {
-                throw new ArgumentException($"Set{typeof(PropertyType).Name}Range: maxValue cannot be less than or equal to minValue when using a range of Between or Outside");
+                throw new ArgumentException($"Set{propertyTypeName}Range: maxValue cannot be less than or equal to minValue when using a range of Between or Outside");
             }
 
             if (minValue == null && range == Range.GreaterThan)
             {
-                throw new ArgumentException($"Set{typeof(PropertyType).Name}Range: minValue must not be null when using the GreaterThan range");
+                throw new ArgumentException($"Set{propertyTypeName}Range: minValue must not be null when using the GreaterThan range");
             }
 
             if (maxValue == null && range == Range.LessThan)
             {
-                throw new ArgumentException($"Set{typeof(PropertyType).Name}Range: minValue must not be null when using the GreaterThan range");
+                throw new ArgumentException($"Set{propertyTypeName}Range: minValue must not be null when using the GreaterThan range");
             }
 
             var min = (PropertyType)typeof(PropertyType).GetField("MinValue").GetValue(null);
@@ -291,12 +344,12 @@ namespace Datr
 
             if (minValue == max)
             {
-                throw new ArgumentException($"Set{typeof(PropertyType).Name}Range: minValue cannot be equal to {typeof(PropertyType).Name}.MaxValue");
+                throw new ArgumentException($"Set{propertyTypeName}Range: minValue cannot be equal to {propertyTypeName}.MaxValue");
             }
 
             if (maxValue == min)
             {
-                throw new ArgumentException($"Set{typeof(PropertyType).Name}Range: maxValue cannot be equal to {typeof(PropertyType).Name}.MinValue");
+                throw new ArgumentException($"Set{propertyTypeName}Range: maxValue cannot be equal to {propertyTypeName}.MinValue");
             }
 
             if (!HasProperty<ContainingClass, PropertyType>(propertyName))

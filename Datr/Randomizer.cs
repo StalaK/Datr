@@ -406,15 +406,43 @@ namespace Datr
 
         internal DateTime FixedRangeDateTime(FixedRange range)
         {
-            var minRangeTicks = ((DateTime)range.MinValue).Ticks;
-            var maxRangeTicks = ((DateTime)range.MaxValue).Ticks;
+            FixedRange longRange = null;
 
-            var longRange = new FixedRange
+            if (range.Range == Range.Outside)
             {
-                Range = range.Range,
-                MinValue = minRangeTicks,
-                MaxValue = maxRangeTicks
-            };
+                var lowRange = new FixedRange
+                {
+                    Range = Range.Between,
+                    MinValue = System.DateTime.MinValue.Ticks,
+                    MaxValue = ((DateTime)range.MinValue).Ticks
+                };
+
+                var highRange = new FixedRange
+                {
+                    Range = Range.Between,
+                    MinValue = ((DateTime)range.MaxValue).Ticks,
+                    MaxValue = System.DateTime.MaxValue.Ticks
+                };
+
+                longRange = Bool() ? lowRange : highRange;
+            }
+            else
+            {
+                var minRangeTicks = range.MinValue == null
+                    ? System.DateTime.MinValue.Ticks
+                    : ((DateTime)range.MinValue).Ticks;
+
+                var maxRangeTicks = range.MaxValue == null
+                    ? System.DateTime.MaxValue.Ticks
+                    : ((DateTime)range.MaxValue).Ticks;
+
+                longRange = new FixedRange
+                {
+                    Range = Range.Between,
+                    MinValue = minRangeTicks,
+                    MaxValue = maxRangeTicks
+                };
+            }
 
             var newDateTicks = FixedRangeLong(longRange);
             return new DateTime(newDateTicks);
