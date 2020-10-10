@@ -302,7 +302,7 @@ namespace Datr
 
         private void SetRandomPropertyValue<T>(PropertyInfo property, T instance)
         {
-            var method = this.GetType().GetMethod("GetFixedRange");
+            var method = this.GetType().GetMethod("GetFixedRange", BindingFlags.NonPublic | BindingFlags.Instance);
             var genericMethod = method.MakeGenericMethod(instance.GetType());
             var range = (FixedRange)genericMethod.Invoke(this, new[] { property });
 
@@ -396,11 +396,14 @@ namespace Datr
                     var arrayValue = Array.CreateInstance(arrayType, elementCount);
                     for(int i = 0; i < elementCount; i++)
                     {
-                        var createMethod = this.GetType().GetMethod("Create");
+                        var createMethod = this.GetType().GetMethod("SetRandomPropertyValue", BindingFlags.NonPublic | BindingFlags.Instance);
+                        
                         var tuple = Tuple.Create(arrayType);
                         var genericCreateMethod = createMethod.MakeGenericMethod(tuple.GetType());
-                        var populatedClass = genericCreateMethod.Invoke(this, null);
-                        
+
+                        var tupleProperty = tuple.GetType().GetProperty("Item1");
+                        var populatedClass = genericCreateMethod.Invoke(this, new object[] { tupleProperty, tuple });
+
                         arrayValue.SetValue(populatedClass, i);
                     }
 
@@ -428,7 +431,7 @@ namespace Datr
         private bool HasProperty<T, U>(string propertyName) =>
             typeof(T).GetProperties().Any(p => p.Name.ToLower() == propertyName.ToLower() && p.PropertyType == typeof(U));
 
-        public FixedRange GetFixedRange<T>(PropertyInfo property) =>
+        private FixedRange GetFixedRange<T>(PropertyInfo property) =>
             FixedRanges.FirstOrDefault(r => (Type)r.ClassType == typeof(T) && r.PropertyName.ToLower() == property.Name.ToLower());
 
         private void SetRange<PropertyType, ContainingClass>(string propertyName, Range range, dynamic minValue, dynamic maxValue)
@@ -447,6 +450,7 @@ namespace Datr
 
             FixedRanges.Add(fixedRange);
         }
+
         private void ValidateRange<PropertyType, ContainingClass>(string propertyName, Range range, dynamic minValue, dynamic maxValue)
         {
             var propertyTypeName = typeof(PropertyType).Name;
