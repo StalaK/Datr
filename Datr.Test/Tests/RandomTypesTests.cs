@@ -5,105 +5,113 @@ using System;
 namespace Datr.Test.Tests
 {
     [TestClass]
-    public class PrimitivesTests
+    public class RandomTypesTests
     {
         [TestMethod]
         public void BoolPopulated()
         {
-            var primitives = Setup();
-            Assert.IsNotNull(primitives.Bool);
+            var types = Setup();
+            Assert.IsNotNull(types.Bool);
         }
 
         [TestMethod]
         public void SBytePopulated()
         {
-            var primitives = Setup();
-            Assert.IsNotNull(primitives.SByte);
+            var types = Setup();
+            Assert.IsNotNull(types.SByte);
         }
 
         [TestMethod]
         public void BytePopulated()
         {
-            var primitives = Setup();
-            Assert.IsNotNull(primitives.Byte);
+            var types = Setup();
+            Assert.IsNotNull(types.Byte);
         }
 
         [TestMethod]
         public void ShortPopulated()
         {
-            var primitives = Setup();
-            Assert.IsNotNull(primitives.Short);
+            var types = Setup();
+            Assert.IsNotNull(types.Short);
         }
 
         [TestMethod]
         public void UShortPopulated()
         {
-            var primitives = Setup();
-            Assert.IsNotNull(primitives.UShort);
+            var types = Setup();
+            Assert.IsNotNull(types.UShort);
         }
 
         [TestMethod]
         public void CharPopulated()
         {
-            var primitives = Setup();
-            Assert.IsNotNull(primitives.Char);
+            var types = Setup();
+            Assert.IsNotNull(types.Char);
         }
 
         [TestMethod]
         public void DoublePopulated()
         {
-            var primitives = Setup();
-            Assert.IsNotNull(primitives.Double);
+            var types = Setup();
+            Assert.IsNotNull(types.Double);
         }
 
         [TestMethod]
         public void FloatPopulated()
         {
-            var primitives = Setup();
-            Assert.IsNotNull(primitives.Float);
+            var types = Setup();
+            Assert.IsNotNull(types.Float);
         }
 
         [TestMethod]
         public void UIntPopulated()
         {
-            var primitives = Setup();
-            Assert.IsNotNull(primitives.UInt);
+            var types = Setup();
+            Assert.IsNotNull(types.UInt);
         }
 
         [TestMethod]
         public void LongPopulated()
         {
-            var primitives = Setup();
-            Assert.IsNotNull(primitives.Long);
+            var types = Setup();
+            Assert.IsNotNull(types.Long);
         }
 
         [TestMethod]
         public void ULongPopulated()
         {
-            var primitives = Setup();
-            Assert.IsNotNull(primitives.ULong);
+            var types = Setup();
+            Assert.IsNotNull(types.ULong);
         }
 
         [TestMethod]
         public void DecimalPopulated()
         {
-            var primitives = Setup();
-            Assert.IsNotNull(primitives.Decimal);
+            var types = Setup();
+            Assert.IsNotNull(types.Decimal);
         }
 
         [TestMethod]
         public void IntPopulated()
         {
-            var primitives = Setup();
-            Assert.IsNotNull(primitives.Int);
+            var types = Setup();
+            Assert.IsNotNull(types.Int);
         }
 
         [TestMethod]
         public void DateTimePopulated()
         {
-            var primitives = Setup();
-            Assert.IsNotNull(primitives.DateTime);
-            Assert.AreNotEqual(new DateTime(), primitives.DateTime);
+            var types = Setup();
+            Assert.IsNotNull(types.DateTime);
+            Assert.AreNotEqual(new DateTime(), types.DateTime);
+        }
+
+        [TestMethod]
+        public void ArrayPopulated()
+        {
+            var types = Setup();
+            Assert.IsNotNull(types.DateTime);
+            Assert.AreNotEqual(new DateTime(), types.DateTime);
         }
 
         private BasicClass Setup()
