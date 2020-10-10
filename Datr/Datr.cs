@@ -387,6 +387,25 @@ namespace Datr
                     var dateTimeValue = range == null ? _randomizer.DateTime() : _randomizer.FixedRangeDateTime(range);
                     property.SetValue(instance, dateTimeValue);
                 }
+
+                if (property.PropertyType.IsArray)
+                {
+                    var arrayType = property.PropertyType.GetElementType();
+                    var elementCount = _randomizer.Byte();
+
+                    var arrayValue = Array.CreateInstance(arrayType, elementCount);
+                    for(int i = 0; i < elementCount; i++)
+                    {
+                        var createMethod = this.GetType().GetMethod("Create");
+                        var tuple = Tuple.Create(arrayType);
+                        var genericCreateMethod = createMethod.MakeGenericMethod(tuple.GetType());
+                        var populatedClass = genericCreateMethod.Invoke(this, null);
+                        
+                        arrayValue.SetValue(populatedClass, i);
+                    }
+
+                    property.SetValue(instance, arrayValue);
+                }
             }
 
             if (property.PropertyType.IsClass)
@@ -408,6 +427,9 @@ namespace Datr
 
         private bool HasProperty<T, U>(string propertyName) =>
             typeof(T).GetProperties().Any(p => p.Name.ToLower() == propertyName.ToLower() && p.PropertyType == typeof(U));
+
+        public FixedRange GetFixedRange<T>(PropertyInfo property) =>
+            FixedRanges.FirstOrDefault(r => (Type)r.ClassType == typeof(T) && r.PropertyName.ToLower() == property.Name.ToLower());
 
         private void SetRange<PropertyType, ContainingClass>(string propertyName, Range range, dynamic minValue, dynamic maxValue)
         {
