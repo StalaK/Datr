@@ -306,98 +306,82 @@ namespace Datr
             var genericMethod = method.MakeGenericMethod(instance.GetType());
             var range = (FixedRange)genericMethod.Invoke(this, new[] { property });
 
-            var underlyingNullableType = Nullable.GetUnderlyingType(property.PropertyType);
+            var propertyInstance = Activator.CreateInstance(property.PropertyType);
 
-            if (property.PropertyType.IsPrimitive || underlyingNullableType?.IsPrimitive == true)
+            var value = GetRandomPropertyValue(propertyInstance, range);
+            property.SetValue(instance, value);
+        }
+
+        private dynamic GetRandomPropertyValue<TProperty>(TProperty property, FixedRange range)
+        {
+            var underlyingNullableType = Nullable.GetUnderlyingType(typeof(TProperty));
+            
+            if (typeof(TProperty).IsPrimitive || underlyingNullableType?.IsPrimitive == true)
             {
-                var propertyInstance = 
-                    underlyingNullableType == null ? Activator.CreateInstance(property.PropertyType) : Activator.CreateInstance(underlyingNullableType);
+                var propertyInstance =
+                    underlyingNullableType == null ? Activator.CreateInstance(typeof(TProperty)) : Activator.CreateInstance(underlyingNullableType);
 
                 switch (propertyInstance)
                 {
                     case bool t:
-                        property.SetValue(instance, _randomizer.Bool());
-                        break;
+                        return _randomizer.Bool();
 
                     case char t:
-                        property.SetValue(instance, _randomizer.Char());
-                        break;
+                        return _randomizer.Char();
 
                     case sbyte t:
-                        var sbyteValue = range == null ? _randomizer.SByte() : _randomizer.FixedRangeSByte(range);
-                        property.SetValue(instance, sbyteValue);
-                        break;
+                        return range == null ? _randomizer.SByte() : _randomizer.FixedRangeSByte(range);
 
                     case byte t:
-                        var byteValue = range == null ? _randomizer.Byte() : _randomizer.FixedRangeByte(range);
-                        property.SetValue(instance, byteValue);
-                        break;
+                        return range == null ? _randomizer.Byte() : _randomizer.FixedRangeByte(range);
 
                     case short t:
-                        var shortValue = range == null ? _randomizer.Short() : _randomizer.FixedRangeShort(range);
-                        property.SetValue(instance, shortValue);
-                        break;
+                        return range == null ? _randomizer.Short() : _randomizer.FixedRangeShort(range);
 
                     case ushort t:
-                        var ushortValue = range == null ? _randomizer.UShort() : _randomizer.FixedRangeUShort(range);
-                        property.SetValue(instance, ushortValue);
-                        break;
+                        return range == null ? _randomizer.UShort() : _randomizer.FixedRangeUShort(range);
 
                     case double t:
-                        var doubleValue = range == null ? _randomizer.Double() : _randomizer.FixedRangeDouble(range);
-                        property.SetValue(instance, doubleValue);
-                        break;
+                        return range == null ? _randomizer.Double() : _randomizer.FixedRangeDouble(range);
 
                     case float t:
-                        var floatValue = range == null ? _randomizer.Float() : _randomizer.FixedRangeFloat(range);
-                        property.SetValue(instance, floatValue);
-                        break;
+                        return range == null ? _randomizer.Float() : _randomizer.FixedRangeFloat(range);
 
                     case int t:
-                        var intValue = range == null ? _randomizer.Int() : _randomizer.FixedRangeInt(range);
-                        property.SetValue(instance, intValue);
-                        break;
+                        return range == null ? _randomizer.Int() : _randomizer.FixedRangeInt(range);
 
                     case uint t:
-                        var uintValue = range == null ? _randomizer.UInt() : _randomizer.FixedRangeUInt(range);
-                        property.SetValue(instance, uintValue);
-                        break;
+                        return range == null ? _randomizer.UInt() : _randomizer.FixedRangeUInt(range);
 
                     case long t:
-                        var longValue = range == null ? _randomizer.Long() : _randomizer.FixedRangeLong(range);
-                        property.SetValue(instance, longValue);
-                        break;
+                        return range == null ? _randomizer.Long() : _randomizer.FixedRangeLong(range);
 
                     case ulong t:
-                        var ulongValue = range == null ? _randomizer.ULong() : _randomizer.FixedRangeULong(range);
-                        property.SetValue(instance, ulongValue);
-                        break;
+                        return range == null ? _randomizer.ULong() : _randomizer.FixedRangeULong(range);
                 }
             }
             else
             {
-                if (property.PropertyType == typeof(decimal) || underlyingNullableType == typeof(decimal))
+                if (typeof(TProperty) == typeof(decimal) || underlyingNullableType == typeof(decimal))
                 {
-                    var decimalValue = range == null ? _randomizer.Decimal() : _randomizer.FixedRangeDecimal(range);
-                    property.SetValue(instance, decimalValue);
+                    return range == null ? _randomizer.Decimal() : _randomizer.FixedRangeDecimal(range);
                 }
 
-                if (property.PropertyType == typeof(DateTime))
+                if (typeof(TProperty) == typeof(DateTime))
                 {
-                    var dateTimeValue = range == null ? _randomizer.DateTime() : _randomizer.FixedRangeDateTime(range);
-                    property.SetValue(instance, dateTimeValue);
+                    return range == null ? _randomizer.DateTime() : _randomizer.FixedRangeDateTime(range);
                 }
 
-                if (property.PropertyType.IsArray)
+                if (typeof(TProperty).IsArray)
                 {
-                    var arrayType = property.PropertyType.GetElementType();
+                    var arrayType = typeof(TProperty).GetElementType();
                     var elementCount = _randomizer.Byte();
 
                     var arrayValue = Array.CreateInstance(arrayType, elementCount);
-                    for(int i = 0; i < elementCount; i++)
+                    for (int i = 0; i < elementCount; i++)
                     {
-                        var createMethod = this.GetType().GetMethod("SetRandomPropertyValue", BindingFlags.NonPublic | BindingFlags.Instance);
-                        
+                        var createMethod = this.GetType().GetMethod("GetRandomPropertyValue", BindingFlags.NonPublic | BindingFlags.Instance);
+
                         var tuple = Tuple.Create(arrayType);
                         var genericCreateMethod = createMethod.MakeGenericMethod(tuple.GetType());
 
@@ -407,25 +391,26 @@ namespace Datr
                         arrayValue.SetValue(populatedClass, i);
                     }
 
-                    property.SetValue(instance, arrayValue);
+                    return arrayValue;
                 }
             }
 
-            if (property.PropertyType.IsClass)
+            if (typeof(TProperty).IsClass)
             {
-                if (property.PropertyType == typeof(string))
+                if (typeof(TProperty) == typeof(string))
                 {
-                    var stringValue = range == null ? _randomizer.String() : _randomizer.FixedRangeString(range);
-                    property.SetValue(instance, stringValue);
+                    return range == null ? _randomizer.String() : _randomizer.FixedRangeString(range);
                 }
                 else
                 {
                     var createMethod = this.GetType().GetMethod("Create");
-                    var genericCreateMethod = createMethod.MakeGenericMethod(property.PropertyType);
+                    var genericCreateMethod = createMethod.MakeGenericMethod(typeof(TProperty));
                     var populatedClass = genericCreateMethod.Invoke(this, null);
-                    property.SetValue(instance, populatedClass);
+                    return populatedClass;
                 }
             }
+
+            return null;
         }
 
         private bool HasProperty<T, U>(string propertyName) =>
