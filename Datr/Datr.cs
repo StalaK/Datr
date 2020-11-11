@@ -306,20 +306,38 @@ namespace Datr
             var genericMethod = method.MakeGenericMethod(instance.GetType());
             var range = (FixedRange)genericMethod.Invoke(this, new[] { property });
 
-            var propertyInstance = Activator.CreateInstance(property.PropertyType);
+            if (property.PropertyType.IsArray)
+            {
+                var arrayElements = _randomizer.Byte();
+                var elementType = property.PropertyType.GetElementType();
+                var elementInstance = Activator.CreateInstance(elementType);
+                dynamic arrayInstance = Array.CreateInstance(elementType, arrayElements);
 
-            var value = GetRandomPropertyValue(propertyInstance, range);
-            property.SetValue(instance, value);
+                for (var i = 0; i < arrayElements; i++)
+                {
+                    
+                    var val = GetRandomPropertyValue(elementInstance, range);
+                    arrayInstance[i] = val;
+                }
+
+                property.SetValue(instance, arrayInstance);
+            }
+            else
+            {
+                var propertyInstance = Activator.CreateInstance(property.PropertyType);
+                var value = GetRandomPropertyValue(propertyInstance, range);
+                property.SetValue(instance, value);
+            }
         }
 
         private dynamic GetRandomPropertyValue<TProperty>(TProperty property, FixedRange range)
         {
             var underlyingNullableType = Nullable.GetUnderlyingType(typeof(TProperty));
             
-            if (typeof(TProperty).IsPrimitive || underlyingNullableType?.IsPrimitive == true)
+            if (property.GetType().IsPrimitive || underlyingNullableType?.IsPrimitive == true)
             {
                 var propertyInstance =
-                    underlyingNullableType == null ? Activator.CreateInstance(typeof(TProperty)) : Activator.CreateInstance(underlyingNullableType);
+                    underlyingNullableType == null ? Activator.CreateInstance(property.GetType()) : Activator.CreateInstance(underlyingNullableType);
 
                 switch (propertyInstance)
                 {
