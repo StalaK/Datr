@@ -60,7 +60,7 @@ namespace Datr
         internal string String()
         {
             var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !\"£$%^&*()-=_+[]{};'#:@~,./<>?\\";
-            var charCount = Math.Abs(Short());
+            var charCount = Byte() + 1;
             
             return new string(Enumerable.Repeat(chars, charCount).Select(s => s[_random.Next(s.Length)]).ToArray());
         }

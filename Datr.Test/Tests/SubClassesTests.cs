@@ -64,6 +64,35 @@ namespace Datr.Test.Tests
                 Assert.IsNotNull(val.ULong);
                 Assert.IsNotNull(val.Decimal);
                 Assert.IsNotNull(val.Int);
+
+                Assert.IsFalse(string.IsNullOrEmpty(val.String));
+                Assert.AreNotEqual(new DateTime(), val.DateTime);
+            }
+        }
+
+        [TestMethod]
+        public void SubClassListPopulated()
+        {
+            var classes = ClassSetup();
+            Assert.IsTrue(classes.BasicClassList.Count > 0);
+            foreach (var val in classes.BasicClassList)
+            {
+                Assert.IsNotNull(val.Bool);
+                Assert.IsNotNull(val.SByte);
+                Assert.IsNotNull(val.Byte);
+                Assert.IsNotNull(val.Short);
+                Assert.IsNotNull(val.UShort);
+                Assert.IsNotNull(val.Char);
+                Assert.IsNotNull(val.Double);
+                Assert.IsNotNull(val.Float);
+                Assert.IsNotNull(val.UInt);
+                Assert.IsNotNull(val.Long);
+                Assert.IsNotNull(val.ULong);
+                Assert.IsNotNull(val.Decimal);
+                Assert.IsNotNull(val.Int);
+
+                Assert.IsFalse(string.IsNullOrEmpty(val.String));
+                Assert.AreNotEqual(new DateTime(), val.DateTime);
             }
         }
 
