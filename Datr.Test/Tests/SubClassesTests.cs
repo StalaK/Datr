@@ -48,8 +48,8 @@ namespace Datr.Test.Tests
         public void SubClassArrayPopulated()
         {
             var classes = ClassSetup();
-            Assert.IsTrue(classes.BasicClassArray.Length > 0);
-            foreach (var val in classes.BasicClassArray)
+            Assert.IsTrue(classes.ValuesClassArray.Length > 0);
+            foreach (var val in classes.ValuesClassArray)
             {
                 Assert.IsNotNull(val.Bool);
                 Assert.IsNotNull(val.SByte);
@@ -74,8 +74,8 @@ namespace Datr.Test.Tests
         public void SubClassListPopulated()
         {
             var classes = ClassSetup();
-            Assert.IsTrue(classes.BasicClassList.Count > 0);
-            foreach (var val in classes.BasicClassList)
+            Assert.IsTrue(classes.ValuesClassList.Count > 0);
+            foreach (var val in classes.ValuesClassList)
             {
                 Assert.IsNotNull(val.Bool);
                 Assert.IsNotNull(val.SByte);

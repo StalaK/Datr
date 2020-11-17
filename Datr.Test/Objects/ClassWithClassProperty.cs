@@ -7,7 +7,7 @@ namespace Datr.Test.Objects
         public ValuesClass ValuesClass { get; set; }
         public string MainClassString { get; set; }
         public int MainClassInt { get; set; }
-        public ValuesClass[] BasicClassArray { get; set; }
-        public List<ValuesClass> BasicClassList { get; set; }
+        public ValuesClass[] ValuesClassArray { get; set; }
+        public List<ValuesClass> ValuesClassList { get; set; }
     }
 }

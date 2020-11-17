@@ -239,7 +239,7 @@ namespace Datr.Test.Tests
 
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(ClassWithClassProperty), "BasicClass", fixedClass)
+                new FixedValue(typeof(ClassWithClassProperty), "ValuesClass", fixedClass)
             };
 
             var classWithClassProperty = datr.Create<ClassWithClassProperty>();
