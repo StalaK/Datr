@@ -209,7 +209,7 @@ namespace Datr
                 throw new ArgumentException("SetStringRange: minValue and maxValue cannot less than or equal to zero");
             }
 
-            if (!HasProperty<T, string>(propertyName))
+            if (!HasProperty<T>(propertyName))
             {
                 throw new ArgumentException($"SetStringRange: The type {typeof(T).Name} does not contain the property {propertyName}");
             }
@@ -267,7 +267,7 @@ namespace Datr
                 throw new ArgumentException("SetDateTimeRange: maxValue cannot be equal to DateTime.MinValue");
             }
 
-            if (!HasProperty<T, DateTime>(propertyName))
+            if (!HasProperty<T>(propertyName))
             {
                 throw new ArgumentException($"SetDateTimeRange: The type {typeof(T).Name} does not contain the property {propertyName}");
             }
@@ -433,8 +433,8 @@ namespace Datr
             return null;
         }
 
-        private bool HasProperty<T, U>(string propertyName) =>
-            typeof(T).GetProperties().Any(p => p.Name.ToLower() == propertyName.ToLower() && p.PropertyType == typeof(U));
+        private bool HasProperty<T>(string propertyName) =>
+            typeof(T).GetProperties().Any(p => p.Name.ToLower() == propertyName.ToLower());
 
         private FixedRange GetFixedRange<T>(PropertyInfo property) =>
             FixedRanges.FirstOrDefault(r => (Type)r.ClassType == typeof(T) && r.PropertyName.ToLower() == property.Name.ToLower());
@@ -493,7 +493,7 @@ namespace Datr
                 throw new ArgumentException($"Set{propertyTypeName}Range: maxValue cannot be equal to {propertyTypeName}.MinValue");
             }
 
-            if (!HasProperty<ContainingClass, PropertyType>(propertyName))
+            if (!HasProperty<ContainingClass>(propertyName))
             {
                 throw new ArgumentException($"Set{typeof(ContainingClass).Name}Range: The type {typeof(ContainingClass).Name} does not contain the property {propertyName}");
             }

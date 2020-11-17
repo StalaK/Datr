@@ -75,6 +75,36 @@ namespace Datr.Test.Tests
         }
 
         [TestMethod]
+        public void RangeValidForArray()
+        {
+            var datr = new Datr();
+            datr.SetIntRange<ValuesClass>("IntArray", Range.Between, -50, 50);
+
+            var basicClass = datr.Create<ValuesClass>();
+
+            foreach (var val in basicClass.IntArray)
+            {
+                Assert.IsTrue(val >= -50, $"Value generated is {val}");
+                Assert.IsTrue(val <= 50, $"Value generated is {val}");
+            }
+        }
+
+        [TestMethod]
+        public void RangeValidForList()
+        {
+            var datr = new Datr();
+            datr.SetIntRange<ValuesClass>("IntList", Range.Between, -50, 50);
+
+            var basicClass = datr.Create<ValuesClass>();
+
+            foreach (var val in basicClass.IntList)
+            {
+                Assert.IsTrue(val >= -50, $"Value generated is {val}");
+                Assert.IsTrue(val <= 50, $"Value generated is {val}");
+            }
+        }
+
+        [TestMethod]
         public void IntRangeMinValueNullBetweenRange()
         {
             var datr = new Datr();
