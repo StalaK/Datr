@@ -130,10 +130,10 @@ namespace Datr.Test.Tests
             }
         }
 
-        private BasicClass Setup()
+        private ValuesClass Setup()
         {
             var datr = new Datr();
-            return datr.Create<BasicClass>();
+            return datr.Create<ValuesClass>();
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class ClassWithClassProperty
     {
-        public BasicClass BasicClass { get; set; }
+        public ValuesClass BasicClass { get; set; }
         public string MainClassString { get; set; }
         public int MainClassInt { get; set; }
     }

@@ -14,10 +14,10 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(BasicClass), "Int", 1234)
+                new FixedValue(typeof(ValuesClass), "Int", 1234)
             };
 
-            var basicClass = datr.Create<BasicClass>();
+            var basicClass = datr.Create<ValuesClass>();
             Assert.AreEqual(1234, basicClass.Int);
         }
 
@@ -27,10 +27,10 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(BasicClass), "String", "Fixed value string")
+                new FixedValue(typeof(ValuesClass), "String", "Fixed value string")
             };
 
-            var basicClass = datr.Create<BasicClass>();
+            var basicClass = datr.Create<ValuesClass>();
             Assert.AreEqual("Fixed value string", basicClass.String);
         }
 
@@ -40,10 +40,10 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(BasicClass), "DateTime", new DateTime(1991, 05, 11))
+                new FixedValue(typeof(ValuesClass), "DateTime", new DateTime(1991, 05, 11))
             };
 
-            var basicClass = datr.Create<BasicClass>();
+            var basicClass = datr.Create<ValuesClass>();
             Assert.AreEqual(new DateTime(1991, 05, 11), basicClass.DateTime);
         }
 
@@ -53,10 +53,10 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(BasicClass), "Bool", true)
+                new FixedValue(typeof(ValuesClass), "Bool", true)
             };
 
-            var basicClass = datr.Create<BasicClass>();
+            var basicClass = datr.Create<ValuesClass>();
             Assert.IsTrue(basicClass.Bool);
         }
 
@@ -66,10 +66,10 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(BasicClass), "SByte", (sbyte)123)
+                new FixedValue(typeof(ValuesClass), "SByte", (sbyte)123)
             };
 
-            var basicClass = datr.Create<BasicClass>();
+            var basicClass = datr.Create<ValuesClass>();
             Assert.AreEqual((sbyte)123, basicClass.SByte);
         }
 
@@ -79,10 +79,10 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(BasicClass), "Byte", (byte)123)
+                new FixedValue(typeof(ValuesClass), "Byte", (byte)123)
             };
 
-            var basicClass = datr.Create<BasicClass>();
+            var basicClass = datr.Create<ValuesClass>();
             Assert.AreEqual((byte)123, basicClass.Byte);
         }
 
@@ -92,10 +92,10 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(BasicClass), "Short", (short)1234)
+                new FixedValue(typeof(ValuesClass), "Short", (short)1234)
             };
 
-            var basicClass = datr.Create<BasicClass>();
+            var basicClass = datr.Create<ValuesClass>();
             Assert.AreEqual((short)1234, basicClass.Short);
         }
 
@@ -105,10 +105,10 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(BasicClass), "UShort", (ushort)1234)
+                new FixedValue(typeof(ValuesClass), "UShort", (ushort)1234)
             };
 
-            var basicClass = datr.Create<BasicClass>();
+            var basicClass = datr.Create<ValuesClass>();
             Assert.AreEqual(1234, basicClass.UShort);
         }
 
@@ -118,10 +118,10 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(BasicClass), "Double", 1234D)
+                new FixedValue(typeof(ValuesClass), "Double", 1234D)
             };
 
-            var basicClass = datr.Create<BasicClass>();
+            var basicClass = datr.Create<ValuesClass>();
             Assert.AreEqual(1234D, basicClass.Double);
         }
 
@@ -131,10 +131,10 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(BasicClass), "Float", 1234F)
+                new FixedValue(typeof(ValuesClass), "Float", 1234F)
             };
 
-            var basicClass = datr.Create<BasicClass>();
+            var basicClass = datr.Create<ValuesClass>();
             Assert.AreEqual(1234F, basicClass.Float);
         }
 
@@ -144,10 +144,10 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(BasicClass), "UInt", 1234U)
+                new FixedValue(typeof(ValuesClass), "UInt", 1234U)
             };
 
-            var basicClass = datr.Create<BasicClass>();
+            var basicClass = datr.Create<ValuesClass>();
             Assert.AreEqual(1234U, basicClass.UInt);
         }
 
@@ -157,10 +157,10 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(BasicClass), "Long", 1234L)
+                new FixedValue(typeof(ValuesClass), "Long", 1234L)
             };
 
-            var basicClass = datr.Create<BasicClass>();
+            var basicClass = datr.Create<ValuesClass>();
             Assert.AreEqual(1234L, basicClass.Long);
         }
 
@@ -170,10 +170,10 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(BasicClass), "ULong", 1234UL)
+                new FixedValue(typeof(ValuesClass), "ULong", 1234UL)
             };
 
-            var basicClass = datr.Create<BasicClass>();
+            var basicClass = datr.Create<ValuesClass>();
             Assert.AreEqual(1234UL, basicClass.ULong);
         }
 
@@ -183,10 +183,10 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(BasicClass), "Decimal", 1234M)
+                new FixedValue(typeof(ValuesClass), "Decimal", 1234M)
             };
 
-            var basicClass = datr.Create<BasicClass>();
+            var basicClass = datr.Create<ValuesClass>();
             Assert.AreEqual(1234M, basicClass.Decimal);
         }
 
@@ -196,10 +196,10 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(BasicClass), "Char", 'F')
+                new FixedValue(typeof(ValuesClass), "Char", 'F')
             };
 
-            var basicClass = datr.Create<BasicClass>();
+            var basicClass = datr.Create<ValuesClass>();
             Assert.AreEqual('F', basicClass.Char);
         }
 
@@ -209,17 +209,17 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(BasicClass), "Int", "OneTwoThree")
+                new FixedValue(typeof(ValuesClass), "Int", "OneTwoThree")
             };
 
-            Assert.ThrowsException<ArgumentException>(() => datr.Create<BasicClass>());
+            Assert.ThrowsException<ArgumentException>(() => datr.Create<ValuesClass>());
         }
 
         [TestMethod]
         public void FixedClass()
         {
             var datr = new Datr();
-            var fixedClass = new BasicClass
+            var fixedClass = new ValuesClass
             {
                 String = "Fixed String",
                 DateTime = new DateTime(1991, 05, 11),
@@ -244,7 +244,7 @@ namespace Datr.Test.Tests
 
             var classWithClassProperty = datr.Create<ClassWithClassProperty>();
 
-            Assert.AreEqual<BasicClass>(fixedClass, classWithClassProperty.BasicClass);
+            Assert.AreEqual<ValuesClass>(fixedClass, classWithClassProperty.BasicClass);
         }
     }
 }

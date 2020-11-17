@@ -2,7 +2,7 @@
 
 namespace Datr.Test.Objects
 {
-    public class BasicClass
+    public class ValuesClass
     {
         public string[] StringArray { get; set; }
         public string String { get; set; }

@@ -15,7 +15,7 @@ namespace Datr.Test.Tests
                 ExcludedPropertyNames = new List<string> { "Int", "Char" }
             };
 
-            var basicClass= datr.Create<BasicClass>();
+            var basicClass= datr.Create<ValuesClass>();
 
             Assert.AreEqual(0, basicClass.Int);
             Assert.AreEqual(0, (int)basicClass.Char);
@@ -28,12 +28,12 @@ namespace Datr.Test.Tests
             {
                 ExcludedTypeProperties = new List<TypeProperty>
                 {
-                    new TypeProperty(typeof(BasicClass), "Int"),
-                    new TypeProperty(typeof(BasicClass), "NotChar"),
+                    new TypeProperty(typeof(ValuesClass), "Int"),
+                    new TypeProperty(typeof(ValuesClass), "NotChar"),
                 }
             };
 
-            var basicClass = datr.Create<BasicClass>();
+            var basicClass = datr.Create<ValuesClass>();
 
             Assert.AreEqual(0, basicClass.Int);
             Assert.IsNotNull(basicClass.Char);
