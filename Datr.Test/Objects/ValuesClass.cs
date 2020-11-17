@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Datr.Test.Objects
 {
     public class ValuesClass
     {
-        public string[] StringArray { get; set; }
+        public List<int> IntList{ get; set; }
         public string String { get; set; }
         public DateTime DateTime { get; set; }
         public bool Bool { get; set; }
@@ -21,5 +22,6 @@ namespace Datr.Test.Objects
         public decimal Decimal { get; set; }
         public int Int { get; set; }
         public int[] IntArray { get; set; }
+        public string[] StringArray { get; set; }        
     }
 }

@@ -11,29 +11,29 @@ namespace Datr.Test.Tests
         public void SubClassPopulated()
         {
             var classes = ClassSetup();
-            Assert.IsNotNull(classes.BasicClass);
+            Assert.IsNotNull(classes.ValuesClass);
         }
 
         [TestMethod]
         public void SubClassPropertiesPopulated()
         {
             var classWithProperty = ClassSetup();
-            Assert.IsNotNull(classWithProperty.BasicClass.Bool);
-            Assert.IsNotNull(classWithProperty.BasicClass.SByte);
-            Assert.IsNotNull(classWithProperty.BasicClass.Byte);
-            Assert.IsNotNull(classWithProperty.BasicClass.Short);
-            Assert.IsNotNull(classWithProperty.BasicClass.UShort);
-            Assert.IsNotNull(classWithProperty.BasicClass.Char);
-            Assert.IsNotNull(classWithProperty.BasicClass.Double);
-            Assert.IsNotNull(classWithProperty.BasicClass.Float);
-            Assert.IsNotNull(classWithProperty.BasicClass.UInt);
-            Assert.IsNotNull(classWithProperty.BasicClass.Long);
-            Assert.IsNotNull(classWithProperty.BasicClass.ULong);
-            Assert.IsNotNull(classWithProperty.BasicClass.Decimal);
-            Assert.IsNotNull(classWithProperty.BasicClass.Int);
+            Assert.IsNotNull(classWithProperty.ValuesClass.Bool);
+            Assert.IsNotNull(classWithProperty.ValuesClass.SByte);
+            Assert.IsNotNull(classWithProperty.ValuesClass.Byte);
+            Assert.IsNotNull(classWithProperty.ValuesClass.Short);
+            Assert.IsNotNull(classWithProperty.ValuesClass.UShort);
+            Assert.IsNotNull(classWithProperty.ValuesClass.Char);
+            Assert.IsNotNull(classWithProperty.ValuesClass.Double);
+            Assert.IsNotNull(classWithProperty.ValuesClass.Float);
+            Assert.IsNotNull(classWithProperty.ValuesClass.UInt);
+            Assert.IsNotNull(classWithProperty.ValuesClass.Long);
+            Assert.IsNotNull(classWithProperty.ValuesClass.ULong);
+            Assert.IsNotNull(classWithProperty.ValuesClass.Decimal);
+            Assert.IsNotNull(classWithProperty.ValuesClass.Int);
 
-            Assert.IsFalse(string.IsNullOrEmpty(classWithProperty.BasicClass.String));
-            Assert.AreNotEqual(new DateTime(), classWithProperty.BasicClass.DateTime);
+            Assert.IsFalse(string.IsNullOrEmpty(classWithProperty.ValuesClass.String));
+            Assert.AreNotEqual(new DateTime(), classWithProperty.ValuesClass.DateTime);
         }
 
         [TestMethod]
@@ -42,6 +42,29 @@ namespace Datr.Test.Tests
             var classWithProperty = ClassSetup();
             Assert.IsFalse(string.IsNullOrEmpty(classWithProperty.MainClassString));
             Assert.AreNotEqual(0, classWithProperty.MainClassInt);
+        }
+
+        [TestMethod]
+        public void SubClassArrayPopulated()
+        {
+            var classes = ClassSetup();
+            Assert.IsTrue(classes.BasicClassArray.Length > 0);
+            foreach (var val in classes.BasicClassArray)
+            {
+                Assert.IsNotNull(val.Bool);
+                Assert.IsNotNull(val.SByte);
+                Assert.IsNotNull(val.Byte);
+                Assert.IsNotNull(val.Short);
+                Assert.IsNotNull(val.UShort);
+                Assert.IsNotNull(val.Char);
+                Assert.IsNotNull(val.Double);
+                Assert.IsNotNull(val.Float);
+                Assert.IsNotNull(val.UInt);
+                Assert.IsNotNull(val.Long);
+                Assert.IsNotNull(val.ULong);
+                Assert.IsNotNull(val.Decimal);
+                Assert.IsNotNull(val.Int);
+            }
         }
 
         private ClassWithClassProperty ClassSetup()

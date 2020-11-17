@@ -130,6 +130,18 @@ namespace Datr.Test.Tests
             }
         }
 
+        [TestMethod]
+        public void IntListPopulated()
+        {
+            var types = Setup();
+
+            Assert.IsTrue(types.IntList.Count > 0);
+            foreach (var val in types.IntList)
+            {
+                Assert.IsNotNull(val);
+            }
+        }
+
         private ValuesClass Setup()
         {
             var datr = new Datr();

@@ -98,10 +98,10 @@ namespace Datr.Test.Tests
             Assert.IsNotNull(nullables.Int);
         }
 
-        private BasicNullableClass Setup()
+        private NullablesClass Setup()
         {
             var datr = new Datr();
-            return datr.Create<BasicNullableClass>();
+            return datr.Create<NullablesClass>();
         }
     }
 }

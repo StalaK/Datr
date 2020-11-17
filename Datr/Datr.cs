@@ -314,11 +314,22 @@ namespace Datr
                 var elementType = property.PropertyType.GetElementType();
 
                 value = Array.CreateInstance(elementType, arrayElements);
-
+                
                 for (var i = 0; i < arrayElements; i++)
                 {
                     var val = GetRandomPropertyValue(property, range);
                     value[i] = val;
+                }
+            }
+            else if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
+            {
+                var listElements = _randomizer.Byte();
+
+                value = Activator.CreateInstance(property.PropertyType);
+                for (var i = 0; i < listElements; i++)
+                {
+                    var listValue = GetRandomPropertyValue(property, range);
+                    value.Add(listValue);
                 }
             }
             else
@@ -331,9 +342,19 @@ namespace Datr
 
         private dynamic GetRandomPropertyValue(PropertyInfo property, FixedRange range)
         {
-            var propertyType = property.PropertyType.IsArray
-                ? property.PropertyType.GetElementType()
-                : property.PropertyType;
+            Type propertyType;
+            if (property.PropertyType.IsArray)
+            {
+                propertyType = property.PropertyType.GetElementType();
+            }
+            else if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
+            {
+                propertyType = property.PropertyType.GetGenericArguments()[0];
+            }
+            else
+            {
+                propertyType = property.PropertyType;
+            }
 
             var underlyingNullableType = Nullable.GetUnderlyingType(propertyType);
             

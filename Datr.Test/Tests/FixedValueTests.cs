@@ -244,7 +244,7 @@ namespace Datr.Test.Tests
 
             var classWithClassProperty = datr.Create<ClassWithClassProperty>();
 
-            Assert.AreEqual<ValuesClass>(fixedClass, classWithClassProperty.BasicClass);
+            Assert.AreEqual<ValuesClass>(fixedClass, classWithClassProperty.ValuesClass);
         }
     }
 }

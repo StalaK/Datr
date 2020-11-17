@@ -2,7 +2,7 @@
 
 namespace Datr.Test.Objects
 {
-    public class BasicNullableClass
+    public class NullablesClass
     {
         public bool? Bool { get; set; }
         public sbyte? SByte { get; set; }
