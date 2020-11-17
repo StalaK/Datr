@@ -246,5 +246,50 @@ namespace Datr.Test.Tests
 
             Assert.AreEqual<ValuesClass>(fixedClass, classWithClassProperty.ValuesClass);
         }
+
+        [TestMethod]
+        public void FixedIntArray()
+        {
+            var intArray = new int[] { 1, 2, 3, 5, 8, 13 };
+
+            var datr = new Datr();
+            datr.FixedValues = new List<FixedValue>
+            {
+                new FixedValue(typeof(ValuesClass), "IntArray", intArray)
+            };
+
+            var basicClass = datr.Create<ValuesClass>();
+            Assert.AreEqual(intArray, basicClass.IntArray);
+        }
+
+        [TestMethod]
+        public void FixedStringArray()
+        {
+            var stringArray = new string[] { "Hello", "World", "Datr", "Test" };
+
+            var datr = new Datr();
+            datr.FixedValues = new List<FixedValue>
+            {
+                new FixedValue(typeof(ValuesClass), "STringArray", stringArray)
+            };
+
+            var basicClass = datr.Create<ValuesClass>();
+            Assert.AreEqual(stringArray, basicClass.StringArray);
+        }
+
+        [TestMethod]
+        public void FixedIntList()
+        {
+            var intList = new List<int> { 3, 1, 4, 1, 5, 9, 2, 6, 5 };
+
+            var datr = new Datr();
+            datr.FixedValues = new List<FixedValue>
+            {
+                new FixedValue(typeof(ValuesClass), "IntList", intList)
+            };
+
+            var basicClass = datr.Create<ValuesClass>();
+            Assert.AreEqual(intList, basicClass.IntList);
+        }
     }
 }
