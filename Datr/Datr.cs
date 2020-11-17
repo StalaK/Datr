@@ -306,38 +306,41 @@ namespace Datr
             var genericMethod = method.MakeGenericMethod(instance.GetType());
             var range = (FixedRange)genericMethod.Invoke(this, new[] { property });
 
+            dynamic value;
+
             if (property.PropertyType.IsArray)
             {
                 var arrayElements = _randomizer.Byte();
                 var elementType = property.PropertyType.GetElementType();
-                var elementInstance = Activator.CreateInstance(elementType);
-                dynamic arrayInstance = Array.CreateInstance(elementType, arrayElements);
+
+                value = Array.CreateInstance(elementType, arrayElements);
 
                 for (var i = 0; i < arrayElements; i++)
                 {
-                    
-                    var val = GetRandomPropertyValue(elementInstance, range);
-                    arrayInstance[i] = val;
+                    var val = GetRandomPropertyValue(property, range);
+                    value[i] = val;
                 }
-
-                property.SetValue(instance, arrayInstance);
             }
             else
             {
-                var propertyInstance = Activator.CreateInstance(property.PropertyType);
-                var value = GetRandomPropertyValue(propertyInstance, range);
-                property.SetValue(instance, value);
+                value = GetRandomPropertyValue(property, range);
             }
+
+            property.SetValue(instance, value);
         }
 
-        private dynamic GetRandomPropertyValue<TProperty>(TProperty property, FixedRange range)
+        private dynamic GetRandomPropertyValue(PropertyInfo property, FixedRange range)
         {
-            var underlyingNullableType = Nullable.GetUnderlyingType(typeof(TProperty));
+            var propertyType = property.PropertyType.IsArray
+                ? property.PropertyType.GetElementType()
+                : property.PropertyType;
+
+            var underlyingNullableType = Nullable.GetUnderlyingType(propertyType);
             
-            if (property.GetType().IsPrimitive || underlyingNullableType?.IsPrimitive == true)
+            if (propertyType.IsPrimitive || underlyingNullableType?.IsPrimitive == true)
             {
                 var propertyInstance =
-                    underlyingNullableType == null ? Activator.CreateInstance(property.GetType()) : Activator.CreateInstance(underlyingNullableType);
+                    underlyingNullableType == null ? Activator.CreateInstance(propertyType) : Activator.CreateInstance(underlyingNullableType);
 
                 switch (propertyInstance)
                 {
@@ -380,49 +383,27 @@ namespace Datr
             }
             else
             {
-                if (typeof(TProperty) == typeof(decimal) || underlyingNullableType == typeof(decimal))
+                if (propertyType == typeof(decimal) || underlyingNullableType == typeof(decimal))
                 {
                     return range == null ? _randomizer.Decimal() : _randomizer.FixedRangeDecimal(range);
                 }
 
-                if (typeof(TProperty) == typeof(DateTime))
+                if (propertyType == typeof(DateTime))
                 {
                     return range == null ? _randomizer.DateTime() : _randomizer.FixedRangeDateTime(range);
                 }
-
-                if (typeof(TProperty).IsArray)
-                {
-                    var arrayType = typeof(TProperty).GetElementType();
-                    var elementCount = _randomizer.Byte();
-
-                    var arrayValue = Array.CreateInstance(arrayType, elementCount);
-                    for (int i = 0; i < elementCount; i++)
-                    {
-                        var createMethod = this.GetType().GetMethod("GetRandomPropertyValue", BindingFlags.NonPublic | BindingFlags.Instance);
-
-                        var tuple = Tuple.Create(arrayType);
-                        var genericCreateMethod = createMethod.MakeGenericMethod(tuple.GetType());
-
-                        var tupleProperty = tuple.GetType().GetProperty("Item1");
-                        var populatedClass = genericCreateMethod.Invoke(this, new object[] { tupleProperty, tuple });
-
-                        arrayValue.SetValue(populatedClass, i);
-                    }
-
-                    return arrayValue;
-                }
             }
 
-            if (typeof(TProperty).IsClass)
+            if (propertyType.IsClass)
             {
-                if (typeof(TProperty) == typeof(string))
+                if (propertyType == typeof(string))
                 {
                     return range == null ? _randomizer.String() : _randomizer.FixedRangeString(range);
                 }
                 else
                 {
                     var createMethod = this.GetType().GetMethod("Create");
-                    var genericCreateMethod = createMethod.MakeGenericMethod(typeof(TProperty));
+                    var genericCreateMethod = createMethod.MakeGenericMethod(propertyType);
                     var populatedClass = genericCreateMethod.Invoke(this, null);
                     return populatedClass;
                 }

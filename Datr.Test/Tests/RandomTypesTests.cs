@@ -110,8 +110,12 @@ namespace Datr.Test.Tests
         public void ArrayPopulated()
         {
             var types = Setup();
-            Assert.IsNotNull(types.DateTime);
-            Assert.AreNotEqual(new DateTime(), types.DateTime);
+
+            Assert.IsTrue(types.IntArray.Length > 0);
+            foreach (var val in types.IntArray)
+            {
+                Assert.IsNotNull(val);
+            }
         }
 
         private BasicClass Setup()
