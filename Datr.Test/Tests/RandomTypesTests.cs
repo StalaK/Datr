@@ -107,7 +107,7 @@ namespace Datr.Test.Tests
         }
 
         [TestMethod]
-        public void ArrayPopulated()
+        public void IntArrayPopulated()
         {
             var types = Setup();
 
@@ -115,6 +115,18 @@ namespace Datr.Test.Tests
             foreach (var val in types.IntArray)
             {
                 Assert.IsNotNull(val);
+            }
+        }
+
+        [TestMethod]
+        public void StringArrayPopulated()
+        {
+            var types = Setup();
+
+            Assert.IsTrue(types.StringArray.Length > 0);
+            foreach (var val in types.StringArray)
+            {
+                Assert.IsFalse(string.IsNullOrEmpty(val));
             }
         }
 
