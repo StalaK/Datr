@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Copyright></Copyright>
+    <Authors>Josh Hughes</Authors>
+    <Company>Josh Hughes</Company>
+    <PackageLicenseExpression></PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/StalaK/Datr</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/StalaK/Datr</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>Datr, Data, Testing, Automation</PackageTags>
+    <Description>Auto-populate your test data</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
 </Project>
