@@ -321,6 +321,21 @@ namespace Datr
                     value[i] = val;
                 }
             }
+            else if (property.PropertyType.IsEnum)
+            {
+                var enumVals = Enum.GetValues(property.PropertyType);
+
+                var fixedRange = new FixedRange
+                {
+                    Range = Range.Between,
+                    MinValue = 0,
+                    MaxValue = enumVals.Length
+                };
+
+                var randomValueIndex = _randomizer.FixedRangeInt(fixedRange);
+
+                value = Enum.Parse(property.PropertyType, enumVals.GetValue(randomValueIndex).ToString());
+            }
             else if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
             {
                 var listElements = _randomizer.Byte();
