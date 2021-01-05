@@ -270,7 +270,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(ValuesClass), "STringArray", stringArray)
+                new FixedValue(typeof(ValuesClass), "StringArray", stringArray)
             };
 
             var basicClass = datr.Create<ValuesClass>();
