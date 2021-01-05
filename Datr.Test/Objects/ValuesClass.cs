@@ -5,6 +5,7 @@ namespace Datr.Test.Objects
 {
     public class ValuesClass
     {
+        public TestEnum TestEnum { get; set; }
         public string String { get; set; }
         public DateTime DateTime { get; set; }
         public bool Bool { get; set; }
@@ -23,5 +24,13 @@ namespace Datr.Test.Objects
         public int[] IntArray { get; set; }
         public string[] StringArray { get; set; }
         public List<int> IntList { get; set; }
+    }
+
+    public enum TestEnum
+    {
+        Zero = 0,
+        One = 1,
+        Twenty = 20,
+        OneHundred = 100
     }
 }
