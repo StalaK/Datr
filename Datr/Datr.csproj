@@ -5,7 +5,7 @@
     <Copyright></Copyright>
     <Authors>Josh Hughes</Authors>
     <Company>Josh Hughes</Company>
-    <PackageLicenseExpression></PackageLicenseExpression>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/StalaK/Datr</PackageProjectUrl>
     <RepositoryUrl>https://github.com/StalaK/Datr</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
