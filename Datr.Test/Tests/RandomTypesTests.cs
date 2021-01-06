@@ -142,6 +142,13 @@ namespace Datr.Test.Tests
             }
         }
 
+        [TestMethod]
+        public void EnumPopulated()
+        {
+            var types = Setup();
+            Assert.IsNotNull(types.TestEnum);
+        }
+
         private ValuesClass Setup()
         {
             var datr = new Datr();

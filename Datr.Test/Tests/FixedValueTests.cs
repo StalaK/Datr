@@ -270,7 +270,7 @@ namespace Datr.Test.Tests
             var datr = new Datr();
             datr.FixedValues = new List<FixedValue>
             {
-                new FixedValue(typeof(ValuesClass), "STringArray", stringArray)
+                new FixedValue(typeof(ValuesClass), "StringArray", stringArray)
             };
 
             var basicClass = datr.Create<ValuesClass>();
@@ -290,6 +290,19 @@ namespace Datr.Test.Tests
 
             var basicClass = datr.Create<ValuesClass>();
             Assert.AreEqual(intList, basicClass.IntList);
+        }
+
+        [TestMethod]
+        public void FixedEnum()
+        {
+            var datr = new Datr();
+            datr.FixedValues = new List<FixedValue>
+            {
+                new FixedValue(typeof(ValuesClass), "TestEnum", TestEnum.Twenty)
+            };
+
+            var basicClass = datr.Create<ValuesClass>();
+            Assert.AreEqual(TestEnum.Twenty, basicClass.TestEnum);
         }
     }
 }
