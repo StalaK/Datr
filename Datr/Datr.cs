@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 
 namespace Datr
 {
@@ -11,6 +12,7 @@ namespace Datr
         public List<TypeProperty> ExcludedTypeProperties { get; set; }
         public List<FixedValue> FixedValues { get; set; }
         public List<FixedRange> FixedRanges { get; private set; }
+        public bool LogToConsole { get; set; }
         private Randomizer _randomizer { get; set; }
 
         public Datr()
@@ -19,6 +21,7 @@ namespace Datr
             ExcludedTypeProperties = new List<TypeProperty>();
             FixedValues = new List<FixedValue>();
             FixedRanges = new List<FixedRange>();
+            LogToConsole = false;
 
             _randomizer = new Randomizer();
         }
@@ -54,6 +57,12 @@ namespace Datr
                         SetRandomPropertyValue(property, instance);
                     }
                 }
+            }
+
+            if (LogToConsole)
+            {
+                Console.WriteLine($"Datr object type {typeof(T).Name} created:");
+                Console.WriteLine(JsonSerializer.Serialize(instance));
             }
 
             return (T)instance;
