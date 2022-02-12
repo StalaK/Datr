@@ -1,10 +1,9 @@
-﻿namespace Datr
+﻿namespace Datr;
+
+public enum Range
 {
-    public enum Range
-    {
-        GreaterThan,
-        LessThan,
-        Between,
-        Outside
-    }
+    GreaterThan,
+    LessThan,
+    Between,
+    Outside
 }

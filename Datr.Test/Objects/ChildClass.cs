@@ -1,9 +1,8 @@
-﻿namespace Datr.Test.Objects
+﻿namespace Datr.Test.Objects;
+
+public class ChildClass : ParentClass
 {
-    public class ChildClass : ParentClass
-    {
-        public int ChildInt { get; set; }
-        public string ChildString { get; set; }
-        public ValuesClass ChildSubClass { get; set; }
-    }
+    public int ChildInt { get; set; }
+    public string ChildString { get; set; }
+    public ValuesClass ChildSubClass { get; set; }
 }
