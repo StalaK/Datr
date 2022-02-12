@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Datr", "Datr\Datr.csproj", "{BD3EBD7C-83F9-47FB-8F41-9C38615096CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datr.Test", "Datr.Test\Datr.Test.csproj", "{334ACD4F-023F-43C9-81D1-CB2206FF8E99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Datr.Test", "Datr.Test\Datr.Test.csproj", "{334ACD4F-023F-43C9-81D1-CB2206FF8E99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
