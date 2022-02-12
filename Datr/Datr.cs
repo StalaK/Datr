@@ -334,7 +334,7 @@ public class Datr
                 MaxValue = enumVals.Length
             };
 
-            var randomValueIndex = Randomizer.FixedRangeInt(fixedRange);
+            var randomValueIndex = Randomizer.Int(fixedRange);
 
             value = Enum.Parse(property.PropertyType, enumVals.GetValue(randomValueIndex).ToString());
         }
@@ -385,15 +385,16 @@ public class Datr
             {
                 bool => Randomizer.Bool(),
                 char => Randomizer.Char(),
-                sbyte => Randomizer.SByte(),
-                byte => Randomizer.Byte (),
-                short => Randomizer.Short(),
-                double => Randomizer.Double(),
-                float => Randomizer.Float(),
-                int => Randomizer.Int(),
-                uint => Randomizer.UInt(),
-                long => Randomizer.Long(),
-                ulong => Randomizer.ULong(),
+                sbyte => Randomizer.SByte(range),
+                byte => Randomizer.Byte(range),
+                short => Randomizer.Short(range),
+                ushort => Randomizer.UShort(range),
+                double => Randomizer.Double(range),
+                float => Randomizer.Float(range),
+                int => Randomizer.Int(range),
+                uint => Randomizer.UInt(range),
+                long => Randomizer.Long(range),
+                ulong => Randomizer.ULong(range),
                 _ => null
             };
         }
@@ -401,12 +402,12 @@ public class Datr
         {
             if (propertyType == typeof(decimal) || underlyingNullableType == typeof(decimal))
             {
-                return range == null ? Randomizer.Decimal() : Randomizer.FixedRangeDecimal(range);
+                return Randomizer.Decimal(range);
             }
 
             if (propertyType == typeof(DateTime))
             {
-                return range == null ? Randomizer.DateTime() : Randomizer.FixedRangeDateTime(range);
+                return Randomizer.DateTime(range);
             }
         }
 
@@ -414,7 +415,7 @@ public class Datr
         {
             if (propertyType == typeof(string))
             {
-                return range is null ? Randomizer.String() : Randomizer.FixedRangeString(range);
+                return Randomizer.String(range);
             }
             else
             {
